@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block title %}To-Do App{% endblock %}
+
+{% block content %}
+  <div class="jumbotron">
+    <h1 class="display-4">To-Do App</h1>
+    <p class="lead">Just another to-do app.</p>
+  </div>
+
+  <form method="post" >
+    <label>Task:
+      <input name="task_title" type="text" required>
+    </label>
+    <button formaction="/add" >Add</button>
+  </form>
+
+  <form method="post" >
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Items</h2>
+          <form method="post">
+          {% for item in to_do_list %}
+              <input type="checkbox" id="task_title" name="task_title" value={{item.title}}>
+              <label >{{item.status}} - {{item.title}}</label></br>
+          {% endfor %}
+          <input type="submit" value="Complete" formaction="/complete">
+          <input type="submit" value="Delete" formaction="/delete">
+        </form>
+      </div>
+   </div>
+  </form>
+{% endblock %}
