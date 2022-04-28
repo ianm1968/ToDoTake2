@@ -7,6 +7,8 @@ app.config.from_object(Config())
 
 to_do_list=[]
 
+#trello
+
 @app.route('/')
 def index():
     global to_do_list
