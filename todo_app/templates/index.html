@@ -4,7 +4,7 @@
 {% block content %}
   <div class="jumbotron">
     <h1 class="display-4">To-Do App</h1>
-    <p class="lead">Just another to-do app.</p>
+    <p class="lead">Ian M's super dooper To-Do app-a-doodle.</p>
   </div>
 
   <form method="post" >
@@ -21,9 +21,9 @@
           {% for item in to_do_list %}
           <form method="post">
             <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
+            <label for="task_id">{{item.status}} - {{item.title}}</label>
             <input type="submit" value="Complete" formaction="/complete">
             <input type="submit" value="Delete" formaction="/delete">
-            <label for="task_id">{{item.status}} - {{item.title}}</label>
           </form>
           {% endfor %}
       </div>

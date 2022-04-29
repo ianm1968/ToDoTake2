@@ -1,12 +1,17 @@
 from flask import Flask,render_template,request,redirect
+from todo_app import trello
 from todo_app.flask_config import Config
 from todo_app.data.session_items import get_items,add_item,get_item,save_item,delete_item
+
 
 app = Flask(__name__)
 app.config.from_object(Config())
 
+
+
 @app.route('/')
 def index():
+    trello.get_boards_from_my_id()
     sorted_items = sorted(get_items(), key=lambda item: item.get('status'), reverse=True)
     return render_template("index.html", to_do_list=sorted_items)
     
@@ -34,5 +39,6 @@ def delete_item_by_id():
         delete_item(id_to_delete)
     return redirect('/')
 # def delete_item_by_title():
+
 
 
