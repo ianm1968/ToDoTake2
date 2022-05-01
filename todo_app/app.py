@@ -12,6 +12,7 @@ app.config.from_object(Config())
 @app.route('/')
 def index():
     trello.get_boards_from_my_id()
+    print(trello.get_boards_from_me())
     sorted_items = sorted(get_items(), key=lambda item: item.get('status'), reverse=True)
     return render_template("index.html", to_do_list=sorted_items)
     

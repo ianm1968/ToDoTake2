@@ -8,7 +8,7 @@ HOME = 'https://api.trello.com/1'
 def get_boards_from_me():
     url = f'{HOME}/members/me/boards'
     response = requests.get(url,params={'fields':'name,url', 'key':os.getenv('API_KEY'), 'token':os.getenv('TOKEN')})
-    print(response.json())
+    return response.json()
     # return render_template('index.html', landing_image=content['hdurl'])
 
 def get_boards_from_my_id():
