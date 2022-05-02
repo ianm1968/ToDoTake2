@@ -5,46 +5,28 @@ import os
 HOME = 'https://api.trello.com/1'
 
 
-_DEFAULT_ITEMS = [
-    { 'id': 1, 'status': 'Not Started', 'title': 'List saved todo items' },
-    { 'id': 2, 'status': 'Not Started', 'title': 'Allow new items to be added' }
-]
 
+class Item:
+    def __init__(self, id, name, status = 'To Do'):
+        self.id = id
+        self.name = name
+        self.status = status
+    
+    @classmethod
+    def from_trello_card(cls, card, list):
+        return cls(card['id'], card['name'], list['name']) 
 
-def parse(raw):
-    # print (raw)
-    # cardnames = 
-    # get list
-    # get all cards in list
-    # parse
-    # for each 
-    return True
 
 def get_items():
-        # my_boards = get_boards_from_my_id()
-        # my_first_board = get_board_from_board_id(my_boards[0]['id'])
-        # my_boards = get_boards_from_me()
-        # print(my_boards)
-        # my_board=get_board_from_board_id(os.getenv('BOARDID'))
-        # print(my_board)
-        my_board_lists = get_lists_from_board_id(os.getenv('BOARDID'))
-        # print(my_board_lists)
-        # open_cards=get_cards_in_list_from_list_id(my_board_lists[0]['id'])
-        open_cards = get_open_cards_in_lists_from_board_id(os.getenv('BOARDID'));
-        # print(open_cards)
-        parse(open_cards)
-        return open_cards #DEFAULT_ITEMS.copy()
-        """
-        Fetches all saved items from the session.
-
-        Returns:
-            list: The list of saved items.
-        """
-        # my_boards = get_boards_from_me()
-        # print(my_boards)
-        # my_first_board=trello.get_board_from_board_id(my_boards[0]['id'])
-        # # print(my_first_board)
-
+        items=[]
+        open_cards = get_open_cards_in_lists_from_board_id(os.getenv('BOARD_ID'));
+        for list in open_cards:
+            for card in list['cards']:
+                # print(card['name']) 
+                # print(card['name'] +' '+ list['name'])
+                items.append(card['name'],list['name'])            
+        # print(items)
+        return items
     
 def add_item(title):
         added = add_card_to_list_by_list_id(title, os.getenv('DEFAULT_TO_DO_ID'))
@@ -52,7 +34,9 @@ def add_item(title):
         return added
     
 def get_item(id):
-        return True
+    # items = get_items()
+    # return next((item for item in items if item.id == id), None)
+    return True
 
 def save_item(item):
     """
@@ -77,7 +61,7 @@ def get_boards_from_me():
     return response.json()
 
 def get_boards_from_my_id():
-    url = f"{HOME}/members/{os.getenv('MEMBERID')}/boards"
+    url = f"{HOME}/members/{os.getenv('MEMBER_ID')}/boards"
     response = requests.get(url,params={'key':os.getenv('API_KEY'), 'token':os.getenv('TOKEN')})
     return response.json()
 
@@ -160,5 +144,13 @@ def add_card_to_list_by_list_id(card_name, list_id):
     print (response.status_code)
     return response.status_code    
 
-
+def get_list_id_from_name(name):
+    # get lists
+    # iterate to find matching id
+    lists = get_lists_from_board_id(os.getenv('BOARD_ID'))
+    for list in lists:
+        if list['name'] == name:
+            return list['id']
+    return None         
+    
 
