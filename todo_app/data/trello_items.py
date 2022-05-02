@@ -31,6 +31,12 @@ def get_item(id):
     return next((item for item in items if item.id == id), None)
 
 def save_item(item):
+    """
+    Updates an existing item in the session. If no existing item matches the ID of the specified item, nothing is saved.
+
+    Args:
+        item: The item to save.
+    """
     list_id=get_list_id_from_name(item.status)
     result = amend_card_by_id( item.id, item.name, list_id)
     return result

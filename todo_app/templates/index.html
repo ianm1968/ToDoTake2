@@ -19,11 +19,16 @@
       <div class="col-md-12">
         <h2>Items</h2>
           {% for item in to_do_list %}
+       
           <form method="post">
             <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
             <label for="task_id">{{item.status}} - {{item.name}}</label>
-            <input type="submit" value="Complete" formaction="/complete">
-            <input type="submit" value="Delete" formaction="/delete">
+            {% if item.status == "To Do" %}
+              <input type="submit" value="Complete" formaction="/complete">
+            {% else %}
+              <input type="submit" value="Restore" formaction="/restore">
+            {% endif %}
+              <input type="submit" value="Delete" formaction="/delete">
           </form>
           {% endfor %}
       </div>
