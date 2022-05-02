@@ -21,7 +21,7 @@
           {% for item in to_do_list %}
           <form method="post">
             <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
-            <label for="task_id">{{item.status}} - {{item.title}}</label>
+            <label for="task_id">{{item.status}} - {{item.name}}</label>
             <input type="submit" value="Complete" formaction="/complete">
             <input type="submit" value="Delete" formaction="/delete">
           </form>

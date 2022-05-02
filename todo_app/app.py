@@ -1,6 +1,7 @@
 from flask import Flask,render_template,request,redirect
 from todo_app.flask_config import Config
 from todo_app.data.trello_items import get_items,add_item,get_item,save_item,delete_item
+import os
 
 app = Flask(__name__)
 app.config.from_object(Config())
@@ -20,11 +21,9 @@ def add_item_by_title():
 @app.route('/complete', methods=['POST'])
 def complete_item_by_id():
     id_to_complete = request.form.get('task_id')
-    print('ID='+id_to_complete)
     if id_to_complete != None:
         item_to_complete = get_item( id_to_complete )
-        print('item='+item_to_complete)
-        item_to_complete['status'] = 'Completed'
+        item_to_complete.status = os.getenv('DEFAULT_DONE_NAME')
         save_item(item_to_complete)
     return redirect('/')
 
