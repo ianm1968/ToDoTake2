@@ -1,8 +1,6 @@
 from flask import Flask,render_template,request,redirect
-import todo_app.data.trello_items as trello
 from todo_app.flask_config import Config
-from todo_app.data.session_items import get_items,add_item,get_item,save_item,delete_item
-
+from todo_app.data.trello_items import get_items,add_item,get_item,save_item,delete_item
 
 app = Flask(__name__)
 app.config.from_object(Config())
@@ -11,13 +9,6 @@ app.config.from_object(Config())
 
 @app.route('/')
 def index():
-    # my_boards = trello.get_boards_from_me()
-    # print(my_boards)
-    # my_first_board=trello.get_board_from_board_id(my_boards[0]['id'])
-    # # print(my_first_board)
-    # my_first_board_lists=trello.get_lists_from_board_id(my_first_board['id'])
-    # print(my_first_board_lists)
-    # open_cards=trello.get_open_cards_in_list_from_list_id(my_first_board_lists[0]['id'])
     # print(open_cards)
     # my_first_board_first_list_first_card=trello.get_card_from_card_id(my_first_board_first_list_cards[0]['id'])
     # print(my_first_board_first_list_first_card)
@@ -28,7 +19,8 @@ def index():
     # print(last_list_id)
     # trello.move_card_to_list(my_first_board_first_list_first_card['id'],last_list_id)
     
-    sorted_items = sorted(get_items(), key=lambda item: item.get('status'), reverse=True)
+    sorted_items = get_items()
+    # sorted_items = sorted(get_items(), key=lambda item: item.get('status'), reverse=True)
     return render_template("index.html", to_do_list=sorted_items)
     
 @app.route('/add', methods=['POST'])

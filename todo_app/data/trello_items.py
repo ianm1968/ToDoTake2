@@ -1,6 +1,6 @@
 import requests
 import os
-import json
+# import json
 
 HOME = 'https://api.trello.com/1'
 
@@ -12,11 +12,13 @@ _DEFAULT_ITEMS = [
 
 
 def parse(raw):
+    # print (raw)
+    # cardnames = 
     # get list
     # get all cards in list
     # parse
     # for each 
-    return cooked
+    return True
 
 def get_items():
         # my_boards = get_boards_from_my_id()
@@ -29,7 +31,8 @@ def get_items():
         # print(my_board_lists)
         # open_cards=get_cards_in_list_from_list_id(my_board_lists[0]['id'])
         open_cards = get_open_cards_in_lists_from_board_id(os.getenv('BOARDID'));
-        print(open_cards)
+        # print(open_cards)
+        parse(open_cards)
         return open_cards #DEFAULT_ITEMS.copy()
         """
         Fetches all saved items from the session.
@@ -44,11 +47,27 @@ def get_items():
 
     
 def add_item(title):
-        return True
+        added = add_card_to_list_by_list_id(title, os.getenv('DEFAULT_TO_DO_ID'))
+        print('Adding...' + str(added))
+        return added
+    
 def get_item(id):
         return True
+
 def save_item(item):
-        return True
+    """
+    Updates an existing item in the session. If no existing item matches the ID of the specified item, nothing is saved.
+
+    Args:
+        item: The item to save.
+    """
+    existing_items = get_items()
+    updated_items = [item if item['id'] == existing_item['id'] else existing_item for existing_item in existing_items]
+
+    session['items'] = updated_items
+
+    return item
+
 def delete_item(id):
         return True
 
@@ -111,13 +130,6 @@ def get_card_from_card_id(card_id):
     url = f"{HOME}/cards/{card_id}"
     response = requests.get(url,params={'key':os.getenv('API_KEY'), 'token':os.getenv('TOKEN')})
     return response.json()
-    
-# update_card_by_card_id
-# PUT /1/cards/{id}
-# def update_card_by_card_id(card_id):
-#     url = f"{HOME}/cards/{card_id}"
-#     response = requests.put(url,params={'key':os.getenv('API_KEY'), 'token':os.getenv('TOKEN')})
-#     return response.json()    
 
 # move_card_to_list
 # PUT /1/cards/{cardID}?idList={listID}
@@ -133,6 +145,20 @@ def move_card_to_list(card_id, list_id):
     # url = f"{HOME}/cards/{card_id}"
     # print(url)
     # response = requests.delete(url,params={'key':os.getenv('API_KEY'), 'token':os.getenv('TOKEN')})
-    # return response.json()    
+    # return response.json()  
+      
+def add_card_to_list_by_list_id(card_name, list_id):
+    url = f"{HOME}/cards"
+    print(url)
+    response = requests.post(url,params={
+    'name':card_name,
+    'idList':list_id,
+    'key':os.getenv('API_KEY'),
+    'token':os.getenv('TOKEN')
+    })
+    
+    print (response.status_code)
+    return response.status_code    
+
 
 
