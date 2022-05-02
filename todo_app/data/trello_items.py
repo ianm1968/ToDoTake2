@@ -24,7 +24,8 @@ def get_items():
             for card in list['cards']:
                 # print(card['name']) 
                 # print(card['name'] +' '+ list['name'])
-                items.append(card['name'],list['name'])            
+                item = Item.from_trello_card(card, list)
+                items.append(item)            
         # print(items)
         return items
     
@@ -34,9 +35,8 @@ def add_item(title):
         return added
     
 def get_item(id):
-    # items = get_items()
-    # return next((item for item in items if item.id == id), None)
-    return True
+    items = get_items()
+    return next((item for item in items if item.From == id), None)
 
 def save_item(item):
     """

@@ -20,10 +20,10 @@ def add_item_by_title():
 @app.route('/complete', methods=['POST'])
 def complete_item_by_id():
     id_to_complete = request.form.get('task_id')
-    print(id_to_complete)
+    print('ID='+id_to_complete)
     if id_to_complete != None:
         item_to_complete = get_item( id_to_complete )
-        print(item_to_complete)
+        print('item='+item_to_complete)
         item_to_complete['status'] = 'Completed'
         save_item(item_to_complete)
     return redirect('/')
