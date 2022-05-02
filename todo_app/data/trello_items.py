@@ -1,7 +1,6 @@
 import requests
 import os
 # import json
-from flask import render_template
 
 HOME = 'https://api.trello.com/1'
 
@@ -9,13 +8,11 @@ def get_boards_from_me():
     url = f'{HOME}/members/me/boards'
     response = requests.get(url,params={'fields':'name,url', 'key':os.getenv('API_KEY'), 'token':os.getenv('TOKEN')})
     return response.json()
-    # return render_template('index.html', landing_image=content['hdurl'])
 
 def get_boards_from_my_id():
     url = f"{HOME}/members/{os.getenv('MEMBERID')}/boards"
     response = requests.get(url,params={'key':os.getenv('API_KEY'), 'token':os.getenv('TOKEN')})
     return response.json()
-    # return render_template('index.html', landing_image=content['hdurl'])
 
 # get_board_from_board_id
 # GET /1/boards/{id}
@@ -42,9 +39,13 @@ def get_list_from_list_id(list_id):
     
 # get_cards_in_list_from_list_id
 # GET /1/lists/{id}/cards
-def get_cards_in_list_from_list_id(list_id):
+def get_open_cards_in_list_from_list_id(list_id):
     url = f"{HOME}/lists/{list_id}/cards"
-    response = requests.get(url,params={'key':os.getenv('API_KEY'), 'token':os.getenv('TOKEN')})
+    response = requests.get(url,params={
+    'key':os.getenv('API_KEY'), 
+    'token':os.getenv('TOKEN'),
+    'cards':'open'
+    })
     return response.json()
     
 # get_card_from_card_id
