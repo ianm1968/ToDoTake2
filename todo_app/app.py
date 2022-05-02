@@ -30,13 +30,9 @@ def complete_item_by_id():
 @app.route('/delete', methods=['POST'])
 def delete_item_by_id():
     id_to_delete = request.form.get('task_id')
-    print(str(id_to_delete))
     if id_to_delete != None:
-        item_to_delete = get_item(id_to_delete)
-        print(str(item_to_delete))
         delete_item(id_to_delete)
     return redirect('/')
-# def delete_item_by_title():
 
 
 
