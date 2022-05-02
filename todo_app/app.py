@@ -27,6 +27,15 @@ def complete_item_by_id():
         save_item(item_to_complete)
     return redirect('/')
 
+@app.route('/restore', methods=['POST'])
+def restore_item_by_id():
+    id_to_restore = request.form.get('task_id')
+    if id_to_restore != None:
+        item_to_restore = get_item( id_to_restore )
+        item_to_restore.status = os.getenv('DEFAULT_TO_DO_NAME')
+        save_item(item_to_restore)
+    return redirect('/')
+
 @app.route('/delete', methods=['POST'])
 def delete_item_by_id():
     id_to_delete = request.form.get('task_id')
