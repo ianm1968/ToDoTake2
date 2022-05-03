@@ -30,6 +30,7 @@ def get_item(id):
     items = get_items()
     return next((item for item in items if item.id == id), None)
 
+
 def save_item(item):
     """
     Updates an existing item in the session. If no existing item matches the ID of the specified item, nothing is saved.
