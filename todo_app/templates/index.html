@@ -24,12 +24,12 @@
             {% if item.status == "To Do" %}
             <form method="post">
             <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
-            <label for="task_id">{{item.status}} - {{item.name}}</label>
+            <label for="task_id">{{item.name}}</label>
               <input type="submit" value="Complete" formaction="/complete">
               <input type="submit" value="Delete" formaction="/delete">
             {% endif %}
           </form>
-          
+
           {% endfor %}
 
           <h2>Completed</h2>
@@ -37,7 +37,7 @@
             {% if item.status != "To Do" %}
             <form method="post">
             <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
-            <label for="task_id">{{item.status}} - {{item.name}}</label>
+            <label for="task_id">{{item.name}}</label>
               <input type="submit" value="Restore" formaction="/restore">
               <input type="submit" value="Delete" formaction="/delete">
             {% endif %}
