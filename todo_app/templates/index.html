@@ -18,30 +18,31 @@
   <form method="post" >
     <div class="row">
       <div class="col-md-12">
-
         <h2>To Do</h2>
           {% for item in to_do_list %}
             {% if item.status == "To Do" %}
             <form method="post">
-            <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
-            <label for="task_id">{{item.name}}</label>
-              <input type="submit" value="Complete" formaction="/complete">
-              <input type="submit" value="Delete" formaction="/delete">
+              <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
+              <label for="task_id">{{item.name}}</label>
+              <button type="submit" formaction="/complete" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-ok"></span> Done 
+              </button>
+              <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-remove"></span> Delete 
+              </button>
+            </form>
             {% endif %}
-          </form>
-
           {% endfor %}
-
-          <h2>Completed</h2>
+        <h2>Completed</h2>
           {% for item in to_do_list %}
             {% if item.status != "To Do" %}
             <form method="post">
-            <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
-            <label for="task_id">{{item.name}}</label>
+              <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
+              <label for="task_id">{{item.name}}</label>
               <input type="submit" value="Restore" formaction="/restore">
               <input type="submit" value="Delete" formaction="/delete">
+            </form>
             {% endif %}
-          </form>
           {% endfor %}
       </div>
    </div>
