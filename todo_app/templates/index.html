@@ -9,12 +9,13 @@
   </div>
 
   <form method="post" >
-    <label>Task:
-      <input name="task_title" type="text" required>
-    </label>
-    <button type="submit" formaction="/add" class="btn btn-default btn-sm">
-      <span class="glyphicon glyphicon-log-in"></span>
-    </button>
+    <h2>Add</h2>
+    <div class="input-group">
+      <input name="task_title" type="text" class="form-control" required>
+      <div class="input-group-btn">
+        <button class="btn btn-default" type="submit" formaction="/add"><i class="glyphicon glyphicon-save"></i></button>
+      </div>
+    </div>
 </form>
 
   <form method="post" >
@@ -35,7 +36,7 @@
             </form>
             {% endif %}
           {% endfor %}
-        <h2>Completed</h2>
+        <h2>Done</h2>
           {% for item in to_do_list %}
             {% if item.status != "To Do" %}
             <form method="post">
