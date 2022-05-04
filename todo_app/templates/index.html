@@ -12,8 +12,10 @@
     <label>Task:
       <input name="task_title" type="text" required>
     </label>
-    <button formaction="/add" >Add</button>
-  </form>
+    <button type="submit" formaction="/add" class="btn btn-default btn-sm">
+      <span class="glyphicon glyphicon-log-in"></span>
+    </button>
+</form>
 
   <form method="post" >
     <div class="row">
@@ -25,10 +27,10 @@
               <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
               <label for="task_id">{{item.name}}</label>
               <button type="submit" formaction="/complete" class="btn btn-default btn-sm">
-                <span class="glyphicon glyphicon-ok"></span> Done 
+                <span class="glyphicon glyphicon-ok"></span>
               </button>
               <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
-                <span class="glyphicon glyphicon-remove"></span> Delete 
+                <span class="glyphicon glyphicon-trash"></span> 
               </button>
             </form>
             {% endif %}
@@ -39,8 +41,14 @@
             <form method="post">
               <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
               <label for="task_id">{{item.name}}</label>
-              <input type="submit" value="Restore" formaction="/restore">
-              <input type="submit" value="Delete" formaction="/delete">
+              <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
+              <label for="task_id">{{item.name}}</label>
+              <button type="submit" formaction="/restore" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-repeat"></span> 
+              </button>
+              <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-trash"></span> 
+              </button>
             </form>
             {% endif %}
           {% endfor %}
