@@ -1,17 +1,20 @@
+from pydoc import describe
 import requests
 import os
 
 HOME = 'https://api.trello.com/1'
 
 class Item:
-    def __init__(self, id, name, status = 'To Do'):
+    def __init__(self, id, name, status = 'To Do', desc = '', due = ''):
         self.id = id
         self.name = name
         self.status = status
+        self.desc = desc
+        self.due = due
     
     @classmethod
-    def from_trello_card(cls, card, list):
-        return cls(card['id'], card['name'], list['name']) 
+    def from_trello_card(cls, card, list,):
+        return cls(card['id'], card['name'], list['name'], card['desc'], card['due']) 
 
 def get_items():
         items=[]
@@ -39,7 +42,7 @@ def save_item(item):
         item: The item to save.
     """
     list_id=get_list_id_from_name(item.status)
-    result = amend_card_by_id( item.id, item.name, list_id)
+    result = amend_card_by_id( item.id, item.name, list_id, item.desc, item.due)
     return result
 
 def delete_item(id):
