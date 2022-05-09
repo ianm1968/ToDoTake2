@@ -78,11 +78,13 @@ def get_card_from_card_id(card_id):
         'token':os.getenv('TOKEN')})
     return response.json()
 
-def amend_card_by_id(card_id, name, list_id):
+def amend_card_by_id(card_id, name, list_id, desc='', due='' ):
     url = f"{HOME}/cards/{card_id}"
     response = requests.put(url,params={
         'name': name,
         'idList':list_id,
+        'desc': desc,
+        'due': due,
         'key':os.getenv('API_KEY'),
         'token':os.getenv('TOKEN')})
     return response.status_code 
@@ -102,6 +104,7 @@ def add_card_to_list_by_list_id(card_name, list_id):
         'key':os.getenv('API_KEY'),
         'token':os.getenv('TOKEN')})
     return response.status_code    
+
 
       
     
