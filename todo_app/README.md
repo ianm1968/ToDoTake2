@@ -4,16 +4,33 @@
 
 This demonstration webapp uses Flask and poetry for development.  See below for details.  The application can be accessed on  a standard browser via HTTP port 5000. E.g. https://{server-ip-address-goes-here}:5000
 
-![To Do app screenshot](md/to-do-app.png "To Do App")
-
 The app allows the user to enter an item into a To Do list.
 
  - Enter the task text in the 'Task' edit
- - Click Add
+ - Click Add button - it will be added to the 'To Do' list in the app.
+ - Mark a 'To Do' task as complete - it will move to the 'Done' list.
+ - Restore a 'Done' task - it will move back to the 'To Do' list
+  - Delete any task from either the 'To Do' or 'Done' list.
+ 
+## Configuration using .env
+A starter `.env.template` file is  provided but must be filled in using values as follows and renamed `.env`
+```bash
+SECRET_KEY=secret-key
 
-> If you are using GitPod for the project exercise (i.e. you cannot use your local machine) then you'll want to launch a VM using the [following link](https://gitpod.io/#https://github.com/CorndelWithSoftwire/DevOps-Course-Starter). Note this VM comes pre-setup with Python & Poetry pre-installed.
+API_KEY=trello-api-key
 
-## System Requirements
+TOKEN=trello-token
+
+MEMBER_ID =  trello-member-id
+
+BOARD_ID = trello-board-id
+
+DEFAULT_TO_DO_ID = to-do-list-id
+
+DEFAULT_TO_DO_NAME = to-do-list-name
+
+DEFAULT_DONE_NAME = done-list-name
+```
 
 The project uses poetry for Python to create an isolated environment and manage package dependencies. To prepare your system, ensure you have an official distribution of Python version 3.7+ and install Poetry using one of the following commands (as instructed by the [poetry documentation](https://python-poetry.org/docs/#system-requirements)):
 
