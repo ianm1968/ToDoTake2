@@ -74,13 +74,6 @@ def get_open_cards_in_lists_from_board_id(board_id):
     return response.json()
 
 
-def get_card_from_card_id(card_id):
-    url = f"{HOME}/cards/{card_id}"
-    response = requests.get(url,params={
-        'key':os.getenv('API_KEY'), 
-        'token':os.getenv('TOKEN')})
-    return response.json()
-
 def amend_card_by_id(card_id, name, list_id, desc='', due='' ):
     url = f"{HOME}/cards/{card_id}"
     response = requests.put(url,params={
