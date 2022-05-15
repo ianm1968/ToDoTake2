@@ -25,8 +25,6 @@ MEMBER_ID =  trello-member-id
 
 BOARD_ID = trello-board-id
 
-DEFAULT_TO_DO_ID = to-do-list-id
-
 DEFAULT_TO_DO_NAME = to-do-list-name
 
 DEFAULT_DONE_NAME = done-list-name

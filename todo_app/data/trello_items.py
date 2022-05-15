@@ -17,17 +17,18 @@ class Item:
         return cls(card['id'], card['name'], list['name'], card['desc'], card['due']) 
 
 def get_items():
-        items=[]
-        open_cards = get_open_cards_in_lists_from_board_id(os.getenv('BOARD_ID'));
-        for list in open_cards:
-            for card in list['cards']:
-                item = Item.from_trello_card(card, list)
-                items.append(item)            
-        return items
+    items=[]
+    open_cards = get_open_cards_in_lists_from_board_id(os.getenv('BOARD_ID'));
+    for list in open_cards:
+        for card in list['cards']:
+            item = Item.from_trello_card(card, list)
+            items.append(item)            
+    return items
     
 def add_item(title):
-        added = add_card_to_list_by_list_id(title, os.getenv('DEFAULT_TO_DO_ID'))
-        return added
+    list_id=get_list_id_from_name(os.getenv('DEFAULT_TO_DO_NAME'))
+    added = add_card_to_list_by_list_id(title, list_id)
+    return added
     
 def get_item(id):
     items = get_items()
@@ -46,13 +47,14 @@ def save_item(item):
     return result
 
 def delete_item(id):
-        deleted = delete_card_by_card_id(id)
-        return deleted
+    deleted = delete_card_by_card_id(id)
+    return deleted
 
 def get_list_id_from_name(name):
     # get lists
     # iterate to find matching id
     lists = get_lists_from_board_id(os.getenv('BOARD_ID'))
+    print(lists)
     for list in lists:
         if list['name'] == name:
             return list['id']
