@@ -3,6 +3,9 @@ from flask import Flask,render_template,request,redirect
 from todo_app.flask_config import Config
 from todo_app.data.trello_items import get_items,add_item,get_item,save_item,delete_item
 import os
+from todo_app.models.view_model import ViewModel
+
+
 
 app = Flask(__name__)
 app.config.from_object(Config())
@@ -10,8 +13,12 @@ app.config.from_object(Config())
 
 @app.route('/')
 def index():
-    sorted_items = get_items()
-    return render_template("index.html", to_do_list=sorted_items)
+    # sorted_items = get_items()
+    # return render_template("index.html", to_do_list=sorted_items)
+    items = get_items()
+    view_model = ViewModel(items)
+    return render_template('index.html',view_model=view_model)
+    
     
 @app.route('/add', methods=['POST'])
 def add_item_by_title():
@@ -45,6 +52,8 @@ def delete_item_by_id():
     if id_to_delete != None:
         delete_item(id_to_delete)
     return redirect('/')
+
+
 
 
 

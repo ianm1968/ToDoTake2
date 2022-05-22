@@ -20,7 +20,7 @@
 
   <h2>To Do</h2>
   <ul class="list-group"> 
-    {% for item in to_do_list %}
+    {% for item in view_model.items %}
       {% if item.status == "To Do" %}
         <form method="post" >
           <li class="list-group-item  bg-warning d-flex">
@@ -44,7 +44,7 @@
   </ul>
   <h2>Done</h2>
   <ul class="list-group"> 
-    {% for item in to_do_list %}
+    {% for item in view_model.items %}
       {% if item.status != "To Do" %}
         <form method="post" >
           <li class="list-group-item  bg-success text-white d-flex">
