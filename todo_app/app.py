@@ -25,6 +25,16 @@ def add_item_by_title():
     add_item(request.form.get('task_title'))
     return redirect('/')
 
+@app.route('/start', methods=['POST'])
+def start_item_by_id():
+    id_to_start = request.form.get('task_id')
+    if id_to_start != None:
+        item_to_start = get_item( id_to_start )
+        print(os.getenv('DEFAULT_DOING_NAME'))
+        item_to_start.status = os.getenv('DEFAULT_DOING_NAME')
+        save_item(item_to_start)
+    return redirect('/')
+
 @app.route('/complete', methods=['POST'])
 def complete_item_by_id():
     id_to_complete = request.form.get('task_id')

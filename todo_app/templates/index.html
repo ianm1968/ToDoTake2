@@ -23,9 +23,9 @@
     {% for item in view_model.items %}
       {% if item.status == "To Do" %}
         <form method="post" >
-          <li class="list-group-item  bg-warning d-flex">
+          <li class="list-group-item  bg-danger text-white d-flex">
             <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
-            <button type="submit" formaction="/complete" class="btn btn-default btn-sm">
+            <button type="submit" formaction="/start" class="btn btn-default btn-sm">
               <span class="glyphicon glyphicon-ok"></span>
             </button>
             <p class="p-0 m-2 flex-grow-1 ">{{item.name}}</p> 
@@ -42,10 +42,29 @@
       {% endif %}
     {% endfor %}
   </ul>
+  <h2>Doing</h2>
+  <ul class="list-group"> 
+    {% for item in view_model.items %}
+      {% if item.status == "Doing" %}
+        <form method="post" >
+          <li class="list-group-item  bg-warning text-black d-flex">
+            <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
+            <button type="submit" formaction="/complete" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-repeat"></span>
+            </button>
+            <p class="p-0 m-2 flex-grow-1 ">{{item.name}}</p> 
+            <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-trash"></span>
+            </button>
+          </li>
+        </form>
+      {% endif %}
+    {% endfor %}
+  </ul>
   <h2>Done</h2>
   <ul class="list-group"> 
     {% for item in view_model.items %}
-      {% if item.status != "To Do" %}
+      {% if item.status == "Done" %}
         <form method="post" >
           <li class="list-group-item  bg-success text-white d-flex">
             <input type="hidden" id="task_id" name="task_id" value={{item.id}}>

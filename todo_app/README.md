@@ -8,9 +8,10 @@ The app allows the user to enter an item into a To Do list.
 
  - Enter the task text in the 'Task' edit
  - Click Add button - it will be added to the 'To Do' list in the app.
- - Mark a 'To Do' task as complete - it will move to the 'Done' list.
+ - Tick a 'To Do' task  - it will move to the 'Doing' list.
+ - Tick a 'Doing' task  - it will move to the 'Done' list.
  - Restore a 'Done' task - it will move back to the 'To Do' list
-  - Delete any task from either the 'To Do' or 'Done' list.
+ - Delete any task from either the 'To Do' or 'Done' list.
  
 ## Configuration using .env
 A starter `.env.template` file is  provided but must be filled in using values as follows and renamed `.env`
@@ -24,6 +25,8 @@ TOKEN=trello-token
 BOARD_ID = trello-board-id
 
 DEFAULT_TO_DO_NAME = to-do-list-name
+
+DEFAULT_DOING_NAME = doing-list-name
 
 DEFAULT_DONE_NAME = done-list-name
 ```
