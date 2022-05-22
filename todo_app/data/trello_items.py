@@ -43,7 +43,7 @@ def save_item(item):
         item: The item to save.
     """
     list_id=get_list_id_from_name(item.status)
-    result = amend_card_by_id( item.id, item.name, list_id, item.desc, item.due)
+    result = amend_card_by_id( item.id, item.name, list_id)
     return result
 
 def delete_item(id):
@@ -54,11 +54,24 @@ def get_list_id_from_name(name):
     # get lists
     # iterate to find matching id
     lists = get_lists_from_board_id(os.getenv('BOARD_ID'))
-    print(lists)
     for list in lists:
         if list['name'] == name:
             return list['id']
     return None  
+
+def get_board_id_from_name(name):
+    url = f"{HOME}/members/{name}"
+    response = requests.get(url,params={
+        'key':os.getenv('API_KEY'), 
+        'token':os.getenv('TOKEN')})
+    return response.json()['id']
+
+def get_member_id_from_name(name):
+    url = f"{HOME}/members/{name}"
+    response = requests.get(url,params={
+        'key':os.getenv('API_KEY'), 
+        'token':os.getenv('TOKEN')})
+    return response.json()['id']
 
 def get_lists_from_board_id(board_id):
     url = f"{HOME}/boards/{board_id}/lists"
@@ -81,8 +94,6 @@ def amend_card_by_id(card_id, name, list_id, desc='', due='' ):
     response = requests.put(url,params={
         'name': name,
         'idList':list_id,
-        'desc': desc,
-        'due': due,
         'key':os.getenv('API_KEY'),
         'token':os.getenv('TOKEN')})
     return response.status_code 

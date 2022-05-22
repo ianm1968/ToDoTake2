@@ -21,8 +21,6 @@ API_KEY=trello-api-key
 
 TOKEN=trello-token
 
-MEMBER_ID =  trello-member-id
-
 BOARD_ID = trello-board-id
 
 DEFAULT_TO_DO_NAME = to-do-list-name

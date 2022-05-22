@@ -11,42 +11,42 @@
   <form method="post" >
     <h2>Add</h2>
       <ul class="list-group"> 
-        <form method="post">
-          <li class="list-group-item  bg-light d-flex">
-            <input name="task_title" type="text" class="form-control" required>
-            <button class="btn btn-default" type="submit" formaction="/add"><i class="glyphicon glyphicon-save"></i></button>
-          </li>
-        </form>
+        <li class="list-group-item  bg-light d-flex">
+          <input name="task_title" type="text" class="form-control" required>
+          <button class="btn btn-default" type="submit" formaction="/add"><i class="glyphicon glyphicon-save"></i></button>
+        </li>
       </ul>
   </form>
 
-  <form method="post" >
-    <h2>To Do</h2>
-    <ul class="list-group"> 
-      {% for item in to_do_list %}
-        {% if item.status == "To Do" %}
+  <h2>To Do</h2>
+  <ul class="list-group"> 
+    {% for item in to_do_list %}
+      {% if item.status == "To Do" %}
+        <form method="post" >
           <li class="list-group-item  bg-warning d-flex">
             <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
             <button type="submit" formaction="/complete" class="btn btn-default btn-sm">
               <span class="glyphicon glyphicon-ok"></span>
             </button>
             <p class="p-0 m-2 flex-grow-1 ">{{item.name}}</p> 
-<!-- I'll revisit 'edit' - rmeoved for the time being
+  <!-- I'll revisit 'edit' - rmeoved for the time being
             <button type="submit" formaction="/complete" class="btn btn-default btn-sm">
               <span class="glyphicon glyphicon-edit"></span>
             </button>            
--->
+  -->
             <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
               <span class="glyphicon glyphicon-trash"></span>
             </button>
           </li>
-        {% endif %}
-      {% endfor %}
-    </ul>
-    <h2>Done</h2>
-    <ul class="list-group"> 
-      {% for item in to_do_list %}
-        {% if item.status != "To Do" %}
+        </form>
+      {% endif %}
+    {% endfor %}
+  </ul>
+  <h2>Done</h2>
+  <ul class="list-group"> 
+    {% for item in to_do_list %}
+      {% if item.status != "To Do" %}
+        <form method="post" >
           <li class="list-group-item  bg-success text-white d-flex">
             <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
             <button type="submit" formaction="/restore" class="btn btn-default btn-sm">
@@ -57,8 +57,8 @@
               <span class="glyphicon glyphicon-trash"></span>
             </button>
           </li>
-        {% endif %}
-      {% endfor %}
-    </ul>
-  </form>
+        </form>
+      {% endif %}
+    {% endfor %}
+  </ul>
 {% endblock %}
