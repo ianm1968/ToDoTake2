@@ -30,7 +30,6 @@ def start_item_by_id():
     id_to_start = request.form.get('task_id')
     if id_to_start != None:
         item_to_start = get_item( id_to_start )
-        print(os.getenv('DEFAULT_DOING_NAME'))
         item_to_start.status = os.getenv('DEFAULT_DOING_NAME')
         save_item(item_to_start)
     return redirect('/')
@@ -49,7 +48,6 @@ def restore_item_by_id():
     id_to_restore = request.form.get('task_id')
     if id_to_restore != None:
         item_to_restore = get_item( id_to_restore )
-        print(str(item_to_restore.name))
         item_to_restore.status = os.getenv('DEFAULT_TO_DO_NAME')
         save_item(item_to_restore)
     return redirect('/')
@@ -58,7 +56,6 @@ def restore_item_by_id():
 def delete_item_by_id():
     id_to_delete = request.form.get('task_id')
     item_to_delete = get_item( id_to_delete )
-    print(str(item_to_delete.name))
     if id_to_delete != None:
         delete_item(id_to_delete)
     return redirect('/')
