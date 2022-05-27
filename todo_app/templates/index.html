@@ -1,32 +1,64 @@
 {% extends "layout.html" %}
+
 {% block title %}To-Do App{% endblock %}
 
 {% block content %}
   <div class="jumbotron">
     <h1 class="display-4">To-Do App</h1>
-    <p class="lead">Just another to-do app.</p>
+    <p class="lead">Ian M's super dooper To-Do app-a-doodle.</p>
   </div>
 
   <form method="post" >
-    <label>Task:
-      <input name="task_title" type="text" required>
-    </label>
-    <button formaction="/add" >Add</button>
+    <h2>Add</h2>
+      <ul class="list-group"> 
+        <li class="list-group-item  bg-light d-flex">
+          <input name="task_title" type="text" class="form-control" required>
+          <button class="btn btn-default" type="submit" formaction="/add"><i class="glyphicon glyphicon-save"></i></button>
+        </li>
+      </ul>
   </form>
 
-  <form method="post" >
-    <div class="row">
-      <div class="col-md-12">
-        <h2>Items</h2>
-          <form method="post">
-          {% for item in to_do_list %}
-              <input type="checkbox" id="task_title" name="task_title" value={{item.title}}>
-              <label >{{item.status}} - {{item.title}}</label></br>
-          {% endfor %}
-          <input type="submit" value="Complete" formaction="/complete">
-          <input type="submit" value="Delete" formaction="/delete">
+  <h2>To Do</h2>
+  <ul class="list-group"> 
+    {% for item in to_do_list %}
+      {% if item.status == "To Do" %}
+        <form method="post" >
+          <li class="list-group-item  bg-warning d-flex">
+            <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
+            <button type="submit" formaction="/complete" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-ok"></span>
+            </button>
+            <p class="p-0 m-2 flex-grow-1 ">{{item.name}}</p> 
+  <!-- I'll revisit 'edit' - rmeoved for the time being
+            <button type="submit" formaction="/complete" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-edit"></span>
+            </button>            
+  -->
+            <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-trash"></span>
+            </button>
+          </li>
         </form>
-      </div>
-   </div>
-  </form>
+      {% endif %}
+    {% endfor %}
+  </ul>
+  <h2>Done</h2>
+  <ul class="list-group"> 
+    {% for item in to_do_list %}
+      {% if item.status != "To Do" %}
+        <form method="post" >
+          <li class="list-group-item  bg-success text-white d-flex">
+            <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
+            <button type="submit" formaction="/restore" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-repeat"></span>
+            </button>
+            <p class="p-0 m-2 flex-grow-1 ">{{item.name}}</p> 
+            <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-trash"></span>
+            </button>
+          </li>
+        </form>
+      {% endif %}
+    {% endfor %}
+  </ul>
 {% endblock %}
