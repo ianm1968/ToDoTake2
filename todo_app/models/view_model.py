@@ -14,10 +14,10 @@ class ViewModel:
     
     @property
     def doing_items(self):
-        doings = [item for item in self.items if item['status'] ==  os.getenv('DEFAULT_DOING_NAME')]
+        doings = [this_item for this_item in self.items if this_item.status == os.getenv('DEFAULT_DOING_NAME')]
         return doings
     
     @property
     def done_items(self):
-        done_doings = [item for item in self.items if item['status'] ==  os.getenv('DEFAULT_DONE_NAME')]
+        done_doings = [this_item for this_item in self.items if this_item.status == os.getenv('DEFAULT_DONE_NAME')]
         return done_doings
