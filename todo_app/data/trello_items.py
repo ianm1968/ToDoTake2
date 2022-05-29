@@ -1,4 +1,3 @@
-from pydoc import describe
 import requests
 import os
 
@@ -17,13 +16,13 @@ class Item:
         return cls(card['id'], card['name'], list['name'], card['desc'], card['due']) 
 
 def get_items():
-    items=[]
+    these_items=[]
     open_cards = get_open_cards_in_lists_from_board_id(os.getenv('BOARD_ID'));
     for list in open_cards:
         for card in list['cards']:
             item = Item.from_trello_card(card, list)
-            items.append(item)            
-    return items
+            these_items.append(item)            
+    return these_items
     
 def add_item(title):
     list_id=get_list_id_from_name(os.getenv('DEFAULT_TO_DO_NAME'))
@@ -31,8 +30,8 @@ def add_item(title):
     return added
     
 def get_item(id):
-    items = get_items()
-    return next((item for item in items if item.id == id), None)
+    these_items = get_items()
+    return next((item for item in these_items if item.id == id), None)
 
 
 def save_item(item):

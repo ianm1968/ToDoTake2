@@ -13,10 +13,8 @@ app.config.from_object(Config())
 
 @app.route('/')
 def index():
-    # sorted_items = get_items()
-    # return render_template("index.html", to_do_list=sorted_items)
-    items = get_items()
-    view_model = ViewModel(items)
+    these_items = get_items()
+    view_model = ViewModel(these_items)
     return render_template('index.html',view_model=view_model)
     
     

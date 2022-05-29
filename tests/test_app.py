@@ -1,10 +1,20 @@
+# from todo_app.data.trello_items import Item
 from todo_app.models.view_model import ViewModel
+
+class Item:
+    def __init__(self, name, status = 'To Do', desc = '', due = ''):
+        self.name = name
+        self.status = status
+        self.desc = desc
+        self.due = due
+    
 
 def test_to_do_items():
     # arrange
-    test_model=ViewModel([{
-        'id':1,
-        'name': 'item1 in to do'}])
+    test_item = Item(name='fred',status='To Do')
+    test_list=[]
+    test_list.append(test_item)
+    test_model=ViewModel(test_list)
     # act
     test_to_do_items = test_model.to_do_items
     # assert
@@ -12,20 +22,24 @@ def test_to_do_items():
 
 def test_doing_items():
     # arrange
-    test_model=ViewModel([{
-        'id':1,
-        'name': 'item1 in to do'}])
+    test_item = Item(name='fred',status='Doing')
+    test_list=[]
+    test_list.append(test_item)
+    test_model=ViewModel(test_list)
     # act
-    test_doing_items = test_model.doing_items
+    test_to_do_items = test_model.doing_items
     # assert
-    assert len(test_doing_items) == 1
+    assert len(test_to_do_items) == 1
+
 
 def test_done_items():
     # arrange
-    test_model=ViewModel([{
-        'id':1,
-        'name': 'item1 in to do'}])
+    test_item = Item(name='fred',status='Done')
+    test_list=[]
+    test_list.append(test_item)
+    test_model=ViewModel(test_list)
     # act
-    test_done_items = test_model.done_items
+    test_to_do_items = test_model.done_items
     # assert
-    assert len(test_done_items) == 1
+    assert len(test_to_do_items) == 1
+

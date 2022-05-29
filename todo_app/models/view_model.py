@@ -9,7 +9,7 @@ class ViewModel:
     
     @property
     def to_do_items(self):
-        to_doings = [item for item in self.items if item.status == os.getenv('DEFAULT_TO_DO_NAME')]
+        to_doings = [this_item for this_item in self.items if this_item.status == os.getenv('DEFAULT_TO_DO_NAME')]
         return to_doings   
     
     @property
