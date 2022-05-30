@@ -1,7 +1,8 @@
-# from todo_app.data.trello_items import Item
+# from todo_app.data.trello_items import Item # <<< DONT KNOW WHY I CANT IMPORT THIS WITHOUT CAUSING TEST DISCOVERY ISSUES
 import pytest
 from todo_app.models.view_model import ViewModel
 
+### ADDED BECAUSE CANT IMPORT TRELLO_ITEMS
 class Item:
     def __init__(self, name, status = 'To Do', desc = '', due = ''):
         self.name = name
@@ -18,14 +19,14 @@ def test_list_one_in_to_do():
 
 @pytest.fixture
 def test_list_one_in_doing():
-    test_item = Item(name='fred',status='To Do')
+    test_item = Item(name='fred',status='Doing')
     test_list=[]
     test_list.append(test_item)
     return test_list    
 
 @pytest.fixture
 def test_list_one_in_done():
-    test_item = Item(name='fred',status='To Do')
+    test_item = Item(name='fred',status='Done')
     test_list=[]
     test_list.append(test_item)
     return test_list    
@@ -35,24 +36,23 @@ def test_to_do_items(test_list_one_in_to_do):
     # arrange
     test_model=ViewModel(test_list_one_in_to_do)
     # act
-    test_to_do_items = test_model.to_do_items
+    test_items = test_model.to_do_items
     # assert
-    assert len(test_to_do_items) == 1
+    assert len(test_items) == 1
 
-def test_doing_items(test_list_one_in_to_do):
+def test_doing_items(test_list_one_in_doing):
     # arrange
-    test_model=ViewModel(test_list_one_in_to_do)
+    test_model=ViewModel(test_list_one_in_doing)
     # act
-    test_to_do_items = test_model.doing_items
+    test_items = test_model.doing_items
     # assert
-    assert len(test_to_do_items) == 1
+    assert len(test_items) == 1
 
 
-def test_done_items(test_list_one_in_to_do):
+def test_done_items(test_list_one_in_done):
     # arrange
-    test_model=ViewModel(test_list_one_in_to_do)
+    test_model=ViewModel(test_list_one_in_done)
     # act
-    test_to_do_items = test_model.done_items
+    test_items = test_model.done_items
     # assert
-    assert len(test_to_do_items) == 1
-
+    assert len(test_items) == 1
