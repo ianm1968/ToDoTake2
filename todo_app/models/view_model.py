@@ -21,3 +21,19 @@ class ViewModel:
     def done_items(self):
         done_doings = [this_item for this_item in self.items if this_item.status == os.getenv('DEFAULT_DONE_NAME')]
         return done_doings
+    
+    # which will keep track of if we should show all the completed items, or just the most recent ones.
+    @property
+    def should_show_all_done_items(self):
+        return False
+
+    # which will return all of the tasks that have been completed today.
+    @property
+    def recent_done_items(self):
+        return []
+        
+    # which will return all of the tasks that were completed before today
+    @property
+    def older_done_items(self): 
+        return []
+        
