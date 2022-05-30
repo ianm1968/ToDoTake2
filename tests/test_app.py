@@ -31,6 +31,31 @@ def board_one_in_done():
     test_list.append(test_item)
     return test_list    
 
+@pytest.fixture
+def board_one_in_each():
+    test_list=[]
+    test_item = Item(name='Tom',status='To Do')
+    test_list.append(test_item)
+    test_item = Item(name='Dick',status='Doing')
+    test_list.append(test_item)
+    test_item = Item(name='Harry',status='Done')
+    test_list.append(test_item)
+    return test_list    
+
+@pytest.fixture
+def board_one_hundred_in_each():
+    test_list=[]
+    i = 1
+    while i <= 100:
+        test_item = Item(name='Tom',status='To Do')
+        test_list.append(test_item)
+        test_item = Item(name='Dick',status='Doing')
+        test_list.append(test_item)
+        test_item = Item(name='Harry',status='Done')
+        test_list.append(test_item)
+        i += 1
+    return test_list    
+
 
 def test_no_items():
     # arrange
@@ -45,7 +70,7 @@ def test_no_items():
     assert len(done_items) == 0
 
 
-def test_these_items(board_one_in_to_do):
+def test_one_in_to_do(board_one_in_to_do):
     # arrange
     test_model=ViewModel(board_one_in_to_do)
     # act
@@ -55,7 +80,7 @@ def test_these_items(board_one_in_to_do):
     assert len(test_model.done_items) == 0
  
 
-def test_these_items(board_one_in_doing):
+def test_one_in_doing(board_one_in_doing):
     # arrange
     test_model=ViewModel(board_one_in_doing)
     # act
@@ -64,7 +89,7 @@ def test_these_items(board_one_in_doing):
     assert len(test_model.doing_items) == 1
     assert len(test_model.done_items) == 0
 
-def test_these_items(board_one_in_done):
+def test_one_in_done(board_one_in_done):
     # arrange
     test_model=ViewModel(board_one_in_done)
     # act
@@ -72,4 +97,22 @@ def test_these_items(board_one_in_done):
     assert len(test_model.to_do_items) == 0
     assert len(test_model.doing_items) == 0
     assert len(test_model.done_items) == 1
+
+def test_one_in_each(board_one_in_each):
+    # arrange
+    test_model=ViewModel(board_one_in_each)
+    # act
+    # assert
+    assert len(test_model.to_do_items) == 1
+    assert len(test_model.doing_items) == 1
+    assert len(test_model.done_items) == 1
+
+def test_one_hundred_in_each(board_one_hundred_in_each):
+    # arrange
+    test_model=ViewModel(board_one_hundred_in_each)
+    # act
+    # assert
+    assert len(test_model.to_do_items) == 100
+    assert len(test_model.doing_items) == 100
+    assert len(test_model.done_items) == 100
 

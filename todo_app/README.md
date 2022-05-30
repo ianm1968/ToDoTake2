@@ -79,3 +79,20 @@ You should see output similar to the following:
  * Debugger PIN: 226-556-590
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+
+## Running the Tests
+
+Current pytest test cases cover...
+ - no items
+ - one item in To Do
+ - one item in Doing
+ - one item in Done
+ - one item in each list
+ - one hudred items in each
+
+Presently running the tests pass as expected when run from Test Explorer but not from commandline (unexpected assertion errors happen, to be investigated).
+
+Each test takes a fixture (list of Items) as a parameter and passes.  It can be made to fail...
+ - if the wrong fixture is used when calling e.g. no items fixture to a test such as test_one_in_each
+  - if the assertions made re: the number of Items in the list are altered
+ 
