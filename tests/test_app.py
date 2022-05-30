@@ -11,48 +11,65 @@ class Item:
         self.due = due
 
 @pytest.fixture
-def test_list_one_in_to_do():
+def board_one_in_to_do():
     test_item = Item(name='fred',status='To Do')
     test_list=[]
     test_list.append(test_item)
     return test_list    
 
 @pytest.fixture
-def test_list_one_in_doing():
+def board_one_in_doing():
     test_item = Item(name='fred',status='Doing')
     test_list=[]
     test_list.append(test_item)
     return test_list    
 
 @pytest.fixture
-def test_list_one_in_done():
+def board_one_in_done():
     test_item = Item(name='fred',status='Done')
     test_list=[]
     test_list.append(test_item)
     return test_list    
 
 
-def test_to_do_items(test_list_one_in_to_do):
+def test_no_items():
     # arrange
-    test_model=ViewModel(test_list_one_in_to_do)
+    test_model=ViewModel([])
     # act
-    test_items = test_model.to_do_items
+    to_do_items = test_model.to_do_items
+    doing_items = test_model.doing_items
+    done_items = test_model.done_items
     # assert
-    assert len(test_items) == 1
-
-def test_doing_items(test_list_one_in_doing):
-    # arrange
-    test_model=ViewModel(test_list_one_in_doing)
-    # act
-    test_items = test_model.doing_items
-    # assert
-    assert len(test_items) == 1
+    assert len(to_do_items) == 0
+    assert len(doing_items) == 0
+    assert len(done_items) == 0
 
 
-def test_done_items(test_list_one_in_done):
+def test_these_items(board_one_in_to_do):
     # arrange
-    test_model=ViewModel(test_list_one_in_done)
+    test_model=ViewModel(board_one_in_to_do)
     # act
-    test_items = test_model.done_items
     # assert
-    assert len(test_items) == 1
+    assert len(test_model.to_do_items) == 1
+    assert len(test_model.doing_items) == 0
+    assert len(test_model.done_items) == 0
+ 
+
+def test_these_items(board_one_in_doing):
+    # arrange
+    test_model=ViewModel(board_one_in_doing)
+    # act
+    # assert
+    assert len(test_model.to_do_items) == 0
+    assert len(test_model.doing_items) == 1
+    assert len(test_model.done_items) == 0
+
+def test_these_items(board_one_in_done):
+    # arrange
+    test_model=ViewModel(board_one_in_done)
+    # act
+    # assert
+    assert len(test_model.to_do_items) == 0
+    assert len(test_model.doing_items) == 0
+    assert len(test_model.done_items) == 1
+
