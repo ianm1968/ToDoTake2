@@ -3,6 +3,13 @@ import os
 
 HOME = 'https://api.trello.com/1'
 
+def validate_date_time(d):
+    try:
+        datetime.strptime(d, '%Y-%m-%dT%H:%M:%S.%fZ')
+        return True
+    except ValueError:
+        return False
+
 class Item:
     def __init__(self, id, name, status = 'To Do', desc = '', due = ''):
         self.id = id
