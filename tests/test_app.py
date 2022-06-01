@@ -2,14 +2,15 @@
 from subprocess import CompletedProcess
 import pytest
 from todo_app.models.view_model import ViewModel
+from datetime import datetime, timedelta
 
 ### ADDED BECAUSE CANT IMPORT TRELLO_ITEMS
 class Item:
-    def __init__(self, name, status = 'To Do', desc = '', due = ''):
+    def __init__(self, name, dateLastActivity = '', status = 'To Do', desc = '', ):
         self.name = name
+        self.dateLastActivity = dateLastActivity
         self.status = status
         self.desc = desc
-        self.due = due
 
 @pytest.fixture
 def board_one_in_to_do():
@@ -28,8 +29,32 @@ def board_one_in_doing():
 @pytest.fixture
 def board_one_in_done():
     test_item = Item(name='fred',status='Done')
+    test_item.dateLastActivity = '123'
     test_list=[]
     test_list.append(test_item)
+    return test_list    
+
+@pytest.fixture
+def board_one_each_done_today_yesterday_last_week_tomorrow():
+    test_list=[]
+    today = datetime.now()
+    tomorrow = today + timedelta(days=1)
+    yesterday = today - timedelta(days=1)
+    lastweek = today - timedelta(days=7)
+    today_str = datetime.strftime(today,'%Y-%m-%dT%H:%M:%S.%fZ')
+    tomorrow_str = datetime.strftime(tomorrow,'%Y-%m-%dT%H:%M:%S.%fZ')
+    yesterday_str = datetime.strftime(yesterday,'%Y-%m-%dT%H:%M:%S.%fZ')
+    lastweek_str = datetime.strftime(lastweek,'%Y-%m-%dT%H:%M:%S.%fZ')
+
+    test_item = Item(name='Tom is done today', dateLastActivity = today_str, status='Done')
+    test_list.append(test_item)
+    test_item = Item(name='Dick is done yesterday', dateLastActivity = yesterday_str, status='Done')
+    test_list.append(test_item)
+    test_item = Item(name='Harry is done last week',dateLastActivity = lastweek_str, status='Done')
+    test_list.append(test_item)
+    test_item = Item(name='Nobody can be done tomorrow',dateLastActivity = tomorrow_str, status='Done')
+    test_list.append(test_item)
+
     return test_list    
 
 @pytest.fixture
@@ -123,11 +148,12 @@ def test_should_show_all_done_items(board_one_in_done):
     assert test_items.should_show_all_done_items == True
 
 # which will return all of the tasks that have been completed today.
-def test_recent_done_items(board_one_in_done):
-    test_items=ViewModel(board_one_in_done)
+def test_recent_done_items(board_one_each_done_today_yesterday_last_week_tomorrow):
+    test_items=ViewModel(board_one_each_done_today_yesterday_last_week_tomorrow)
     assert len(test_items.recent_done_items) == 1
     
 # which will return all of the tasks that were completed before today
-def test_older_done_items(board_one_in_done):
-    test_items=ViewModel(board_one_in_done)
-    assert len(test_items.older_done_items) == 1
+def test_older_done_items(board_one_each_done_today_yesterday_last_week_tomorrow):
+    test_items=ViewModel(board_one_each_done_today_yesterday_last_week_tomorrow)
+    assert len(test_items.older_done_items) == 2
+    

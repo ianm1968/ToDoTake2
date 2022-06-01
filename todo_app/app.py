@@ -1,4 +1,3 @@
-from __future__ import generator_stop
 from flask import Flask,render_template,request,redirect
 from todo_app.flask_config import Config
 from todo_app.data.trello_items import get_items,add_item,get_item,save_item,delete_item
@@ -9,24 +8,9 @@ from datetime import datetime
 app = Flask(__name__)
 app.config.from_object(Config())
 
-def trello_due_to_python_datetime(trello_datetime):
-    result = False
-#     // strip date from before the 'T'
-#     split_string = these_items[2].due.split('T')
-#     print split_string
-
-def validate_date(d):
-    try:
-        datetime.strptime(d, '%Y-%m-%dT%H:%M:%S.%fZ')
-        print(str(datetime.strptime(d, '%Y-%m-%dT%H:%M:%S.%fZ')))
-        return True
-    except ValueError:
-        return False
-
 
 @app.route('/')
 def index():
-    print (validate_date('2022-06-01T16:12:03.390Z'))
     these_items = get_items()
     view_model = ViewModel(these_items)
     return render_template('index.html',view_model=view_model)

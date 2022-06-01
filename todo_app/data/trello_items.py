@@ -3,28 +3,23 @@ import os
 
 HOME = 'https://api.trello.com/1'
 
-def validate_date_time(d):
-    try:
-        datetime.strptime(d, '%Y-%m-%dT%H:%M:%S.%fZ')
-        return True
-    except ValueError:
-        return False
 
 class Item:
-    def __init__(self, id, name, status = 'To Do', desc = '', due = ''):
+    def __init__(self, id, name, dateLastActivity = '', status = 'To Do', desc = ''):
         self.id = id
         self.name = name
+        self.dateLastActivity = dateLastActivity
         self.status = status
         self.desc = desc
-        self.due = due
-    
+        
     @classmethod
     def from_trello_card(cls, card, list,):
-        return cls(card['id'], card['name'], list['name'], card['desc'], card['due']) 
+        return cls(card['id'], card['name'], card['dateLastActivity'], list['name'], card['desc'])#, card['due']) 
 
 def get_items():
     these_items=[]
     open_cards = get_open_cards_in_lists_from_board_id(os.getenv('BOARD_ID'));
+    print(open_cards)
     for list in open_cards:
         for card in list['cards']:
             item = Item.from_trello_card(card, list)

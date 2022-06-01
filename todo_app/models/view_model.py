@@ -1,4 +1,6 @@
+from datetime import datetime
 import os
+
 class ViewModel:
     def __init__(self, items):
          self._items = items
@@ -30,10 +32,23 @@ class ViewModel:
     # which will return all of the tasks that have been completed today.
     @property
     def recent_done_items(self):
-        return []
+        todays_done_doings = []
+        today = datetime.now()
+        for this_item in self.items:
+            then = datetime.strptime(this_item.dateLastActivity, '%Y-%m-%dT%H:%M:%S.%fZ')
+            if then.date() == today.date():
+                todays_done_doings.append(this_item)
+        return todays_done_doings
         
     # which will return all of the tasks that were completed before today
     @property
     def older_done_items(self): 
-        return []
+        older_done_doings = []
+        today = datetime.now()
+        for this_item in self.items:
+            then = datetime.strptime(this_item.dateLastActivity, '%Y-%m-%dT%H:%M:%S.%fZ')
+            if then.date() < today.date():
+                older_done_doings.append(this_item)
+        return older_done_doings
         
+    
