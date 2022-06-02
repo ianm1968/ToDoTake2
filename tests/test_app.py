@@ -82,6 +82,14 @@ def board_one_hundred_in_each():
         i += 1
     return test_list    
 
+@pytest.fixture
+def showing_false():
+    return False
+
+@pytest.fixture
+def showing_true():
+    return True
+
 
 def test_no_items():
     # arrange
@@ -143,8 +151,8 @@ def test_one_hundred_in_each(board_one_hundred_in_each):
     assert len(test_model.done_items) == 100
 
 # which will keep track of if we should show all the completed items, or just the most recent ones.
-def test_should_show_all_done_items(board_one_in_done):
-    test_items=ViewModel(board_one_in_done)
+def test_should_show_all_done_items(board_one_in_doing,showing_true):
+    test_items=ViewModel(board_one_in_doing,showing_true)
     assert test_items.should_show_all_done_items == True
 
 # which will return all of the tasks that have been completed today.

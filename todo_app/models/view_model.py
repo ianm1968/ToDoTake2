@@ -1,13 +1,24 @@
 from datetime import datetime
 import os
 
+
 class ViewModel:
-    def __init__(self, items):
+
+    def __init__(self, items,show_all_done_is_selected = False):
          self._items = items
+         self._show_all_done_is_selected = show_all_done_is_selected
     
     @property
     def items(self):
         return self._items
+    
+    @property
+    def show_all_done_is_selected(self):
+        return self._show_all_done_is_selected
+    
+    @show_all_done_is_selected.setter
+    def show_all_done_is_selected(self,showing):
+        self._show_all_done_is_selected = showing
     
     @property
     def to_do_items(self):
@@ -19,15 +30,21 @@ class ViewModel:
         doings = [this_item for this_item in self.items if this_item.status == os.getenv('DEFAULT_DOING_NAME')]
         return doings
     
+
     @property
     def done_items(self):
         done_doings = [this_item for this_item in self.items if this_item.status == os.getenv('DEFAULT_DONE_NAME')]
         return done_doings
-    
-    # which will keep track of if we should show all the completed items, or just the most recent ones.
+   
+
     @property
     def should_show_all_done_items(self):
-        return False
+        # True if less that 5 done (any time)
+        # returnself.recent_done_items
+        # return (self.
+        # or if the user selects to show them all   
+        selected = self._show_all_done_is_selected
+        return ( selected or len(self.done_items) < 5 )
 
     # which will return all of the tasks that have been completed today.
     @property
@@ -50,5 +67,5 @@ class ViewModel:
             if then.date() < today.date():
                 older_done_doings.append(this_item)
         return older_done_doings
-        
-    
+
+    # which will keep track of if we should show all the completed items, or just the most recent ones.
