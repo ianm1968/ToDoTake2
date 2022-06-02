@@ -19,6 +19,7 @@
       </ul>
   </form>
 
+
   <h2>To Do</h2>
   <ul class="list-group"> 
     {% for item in view_model.to_do_items %}
@@ -58,21 +59,68 @@
       </form>
     {% endfor %}
   </ul>
-  <h2>Done</h2>
-  <ul class="list-group"> 
-    {% for item in view_model.done_items %}
-      <form method="post" >
-        <li class="list-group-item  bg-success text-white d-flex">
-          <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
-          <button type="submit" formaction="/restore" class="btn btn-default btn-sm">
-            <span class="glyphicon glyphicon-repeat"></span>
-          </button>
-          <p class="p-0 m-2 flex-grow-1 ">{{item.name}}</p> 
-          <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
-            <span class="glyphicon glyphicon-trash"></span>
-          </button>
+  <form method="post" >
+    <h2>Done</h2>
+      <ul class="list-group"> 
+        <li class="list-group-item bg-white d-flex">
+          <p style="text-align:right;" class="p-0 m-2 flex-grow-1">Show All</p> 
+          <button class="btn btn-default" type="submit" formaction="/add">
+            <i class="glyphicon glyphicon-unchecked"></i></button>
         </li>
-      </form>
-    {% endfor %}
-  </ul>
-{% endblock %}
+      </ul>
+    </form>
+    <form action="/action_page.php">
+      <div class="form-check-inline">
+          <input type="checkbox" class="form-check-input" id="show_all" name="show_all" value="{{view_model.show_all_done_is_selected}}" unchecked>Show All
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <ul class="list-group"> 
+      {% for item in view_model.done_items %}
+        <form method="post" >
+          <li class="list-group-item  bg-success text-white d-flex">
+            <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
+            <button type="submit" formaction="/restore" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-repeat"></span>
+            </button>
+            <p class="p-0 m-2 flex-grow-1 ">{{item.name}}</p> 
+            <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-trash"></span>
+            </button>
+          </li>
+        </form>
+      {% endfor %}
+    </ul>
+    <ul class="list-group"> 
+      {% for item in view_model.done_today_items %}
+        <form method="post" >
+          <li class="list-group-item  bg-success text-white d-flex">
+            <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
+            <button type="submit" formaction="/restore" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-repeat"></span>
+            </button>
+            <p class="p-0 m-2 flex-grow-1 ">{{item.name}}</p> 
+            <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-trash"></span>
+            </button>
+          </li>
+        </form>
+      {% endfor %}
+    </ul>
+    <ul class="list-group"> 
+      {% for item in view_model.done_before_today_items %}
+        <form method="post" >
+          <li class="list-group-item  bg-success text-white d-flex">
+            <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
+            <button type="submit" formaction="/restore" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-repeat"></span>
+            </button>
+            <p class="p-0 m-2 flex-grow-1 ">{{item.name}}</p> 
+            <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-trash"></span>
+            </button>
+          </li>
+        </form>
+      {% endfor %}
+    </ul>
+  {% endblock %}

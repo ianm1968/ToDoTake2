@@ -39,7 +39,7 @@ class ViewModel:
     def done_today_items(self):
         todays_done_doings = []
         today = datetime.now()
-        for this_item in self.items:
+        for this_item in self.done_items:
             then = datetime.strptime(this_item.dateLastActivity, '%Y-%m-%dT%H:%M:%S.%fZ')
             if then.date() == today.date():
                 todays_done_doings.append(this_item)
