@@ -30,25 +30,13 @@ class ViewModel:
         doings = [this_item for this_item in self.items if this_item.status == os.getenv('DEFAULT_DOING_NAME')]
         return doings
     
-
     @property
     def done_items(self):
         done_doings = [this_item for this_item in self.items if this_item.status == os.getenv('DEFAULT_DONE_NAME')]
         return done_doings
    
-
     @property
-    def should_show_all_done_items(self):
-        # True if less that 5 done (any time)
-        # returnself.recent_done_items
-        # return (self.
-        # or if the user selects to show them all   
-        selected = self._show_all_done_is_selected
-        return ( selected or len(self.done_items) < 5 )
-
-    # which will return all of the tasks that have been completed today.
-    @property
-    def recent_done_items(self):
+    def done_today_items(self):
         todays_done_doings = []
         today = datetime.now()
         for this_item in self.items:
@@ -57,9 +45,8 @@ class ViewModel:
                 todays_done_doings.append(this_item)
         return todays_done_doings
         
-    # which will return all of the tasks that were completed before today
     @property
-    def older_done_items(self): 
+    def done_before_today_items(self): 
         older_done_doings = []
         today = datetime.now()
         for this_item in self.items:
@@ -68,4 +55,11 @@ class ViewModel:
                 older_done_doings.append(this_item)
         return older_done_doings
 
-    # which will keep track of if we should show all the completed items, or just the most recent ones.
+    @property
+    def should_show_all_done_items(self):
+        # True if less that 5 done (any time)
+        # or if the user selects to show them all   
+        selected = self._show_all_done_is_selected
+        total_count = len(self.done_items)
+        return (selected or total_count<5)
+

@@ -35,6 +35,79 @@ def board_one_in_done():
     return test_list    
 
 @pytest.fixture
+def board_done_three_today_one_yesterday():
+    today=datetime.now()
+    yesterday=today-timedelta(days=1)
+    today_str = datetime.strftime(today,'%Y-%m-%dT%H:%M:%S.%fZ')
+    yesterday_str = datetime.strftime(yesterday,'%Y-%m-%dT%H:%M:%S.%fZ')
+    test_list=[]
+    i = 1
+    test_item = Item(name='Dick',status='Done',dateLastActivity=today_str)
+    while i <= 3:
+        test_list.append(test_item)
+        i += 1
+    test_item = Item(name='Harry',status='Done',dateLastActivity=yesterday_str)
+    test_list.append(test_item)
+    return test_list      
+
+@pytest.fixture
+def board_done_three_today_two_yesterday():
+    today=datetime.now()
+    yesterday=today-timedelta(days=1)
+    today_str = datetime.strftime(today,'%Y-%m-%dT%H:%M:%S.%fZ')
+    yesterday_str = datetime.strftime(yesterday,'%Y-%m-%dT%H:%M:%S.%fZ')
+    test_list=[]
+    i = 1
+    test_item = Item(name='Dick',status='Done',dateLastActivity=today_str)
+    while i <= 3:
+        test_list.append(test_item)
+        i += 1
+    test_item = Item(name='Harry',status='Done',dateLastActivity=yesterday_str)
+    test_list.append(test_item)
+    test_list.append(test_item)
+    return test_list      
+
+@pytest.fixture
+def board_done_four_today_one_yesterday():
+    today=datetime.now()
+    yesterday=today-timedelta(days=1)
+    today_str = datetime.strftime(today,'%Y-%m-%dT%H:%M:%S.%fZ')
+    yesterday_str = datetime.strftime(yesterday,'%Y-%m-%dT%H:%M:%S.%fZ')
+    test_list=[]
+    i = 1
+    test_item = Item(name='Dick',status='Done',dateLastActivity=today_str)
+    while i <= 4:
+        test_list.append(test_item)
+        i += 1
+    test_item = Item(name='Harry',status='Done',dateLastActivity=yesterday_str)
+    test_list.append(test_item)
+    return test_list      
+
+@pytest.fixture
+def board_four_in_done_today():
+    today = datetime.now()
+    today_str = datetime.strftime(today,'%Y-%m-%dT%H:%M:%S.%fZ')
+    test_list=[]
+    i = 1
+    test_item = Item(name='Harry',status='Done',dateLastActivity=today_str)
+    while i <= 4:
+        test_list.append(test_item)
+        i += 1
+    return test_list      
+
+@pytest.fixture
+def board_five_in_done_today():
+    today = datetime.now()
+    today_str = datetime.strftime(today,'%Y-%m-%dT%H:%M:%S.%fZ')
+    test_list=[]
+    i = 1
+    test_item = Item(name='Harry',status='Done',dateLastActivity=today_str)
+    while i <= 5:
+        test_list.append(test_item)
+        i += 1
+    return test_list   
+
+@pytest.fixture
 def board_one_each_done_today_yesterday_last_week_tomorrow():
     test_list=[]
     today = datetime.now()
@@ -59,26 +132,26 @@ def board_one_each_done_today_yesterday_last_week_tomorrow():
 
 @pytest.fixture
 def board_one_in_each():
+    tom_item = Item(name='Tom',status='To Do')
+    dick_item = Item(name='Dick',status='Doing')
+    harry_item = Item(name='Harry',status='Done')
     test_list=[]
-    test_item = Item(name='Tom',status='To Do')
-    test_list.append(test_item)
-    test_item = Item(name='Dick',status='Doing')
-    test_list.append(test_item)
-    test_item = Item(name='Harry',status='Done')
-    test_list.append(test_item)
+    test_list.append(tom_item)
+    test_list.append(dick_item)
+    test_list.append(harry_item)
     return test_list    
 
 @pytest.fixture
 def board_one_hundred_in_each():
+    tom_item = Item(name='Tom',status='To Do')
+    dick_item = Item(name='Dick',status='Doing')
+    harry_item = Item(name='Harry',status='Done')
     test_list=[]
     i = 1
     while i <= 100:
-        test_item = Item(name='Tom',status='To Do')
-        test_list.append(test_item)
-        test_item = Item(name='Dick',status='Doing')
-        test_list.append(test_item)
-        test_item = Item(name='Harry',status='Done')
-        test_list.append(test_item)
+        test_list.append(tom_item)
+        test_list.append(dick_item)
+        test_list.append(harry_item)
         i += 1
     return test_list    
 
@@ -92,76 +165,69 @@ def showing_true():
 
 
 def test_no_items():
-    # arrange
     test_model=ViewModel([])
-    # act
-    to_do_items = test_model.to_do_items
-    doing_items = test_model.doing_items
-    done_items = test_model.done_items
-    # assert
-    assert len(to_do_items) == 0
-    assert len(doing_items) == 0
-    assert len(done_items) == 0
+    assert len(test_model.to_do_items) == 0
+    assert len(test_model.doing_items) == 0
+    assert len(test_model.done_items) == 0
 
 
 def test_one_in_to_do(board_one_in_to_do):
-    # arrange
     test_model=ViewModel(board_one_in_to_do)
-    # act
-    # assert
     assert len(test_model.to_do_items) == 1
     assert len(test_model.doing_items) == 0
     assert len(test_model.done_items) == 0
  
 
 def test_one_in_doing(board_one_in_doing):
-    # arrange
     test_model=ViewModel(board_one_in_doing)
-    # act
-    # assert
     assert len(test_model.to_do_items) == 0
     assert len(test_model.doing_items) == 1
     assert len(test_model.done_items) == 0
 
 def test_one_in_done(board_one_in_done):
-    # arrange
     test_model=ViewModel(board_one_in_done)
-    # act
-    # assert
     assert len(test_model.to_do_items) == 0
     assert len(test_model.doing_items) == 0
     assert len(test_model.done_items) == 1
 
 def test_one_in_each(board_one_in_each):
-    # arrange
     test_model=ViewModel(board_one_in_each)
-    # act
-    # assert
     assert len(test_model.to_do_items) == 1
     assert len(test_model.doing_items) == 1
     assert len(test_model.done_items) == 1
 
 def test_one_hundred_in_each(board_one_hundred_in_each):
-    # arrange
     test_model=ViewModel(board_one_hundred_in_each)
-    # act
-    # assert
     assert len(test_model.to_do_items) == 100
     assert len(test_model.doing_items) == 100
     assert len(test_model.done_items) == 100
 
-# which will keep track of if we should show all the completed items, or just the most recent ones.
-def test_should_show_all_done_items(board_one_in_doing,showing_true):
-    test_items=ViewModel(board_one_in_doing,showing_true)
+def test_should_show_three_today_one_yesterday(board_done_three_today_one_yesterday):
+    test_items=ViewModel(board_done_three_today_one_yesterday)
     assert test_items.should_show_all_done_items == True
 
-# which will return all of the tasks that have been completed today.
-def test_recent_done_items(board_one_each_done_today_yesterday_last_week_tomorrow):
+def test_shouldnt_show_three_today_two_yesterday(board_done_three_today_two_yesterday):
+    test_items=ViewModel(board_done_three_today_two_yesterday)
+    assert test_items.should_show_all_done_items == False
+
+def test_shouldnt_show_four_today_one_yesterday(board_done_four_today_one_yesterday):
+    test_items=ViewModel(board_done_four_today_one_yesterday)
+    assert test_items.should_show_all_done_items == False
+
+def test_should_show_all_four_done_today(board_four_in_done_today):
+    test_items=ViewModel(board_four_in_done_today)
+    assert test_items.should_show_all_done_items == True
+
+def test_should_show_all_five_done_today(board_five_in_done_today):
+    test_items=ViewModel(board_five_in_done_today)
+    assert test_items.should_show_all_done_items == False #really a 'dont care'
+
+def test_done_today_items(board_one_each_done_today_yesterday_last_week_tomorrow):
     test_items=ViewModel(board_one_each_done_today_yesterday_last_week_tomorrow)
-    assert len(test_items.recent_done_items) == 1
+    assert len(test_items.done_today_items) == 1
     
-# which will return all of the tasks that were completed before today
-def test_older_done_items(board_one_each_done_today_yesterday_last_week_tomorrow):
+
+def test_done_before_today_items(board_one_each_done_today_yesterday_last_week_tomorrow):
     test_items=ViewModel(board_one_each_done_today_yesterday_last_week_tomorrow)
-    assert len(test_items.older_done_items) == 2
+    assert len(test_items.done_before_today_items) == 2
     
