@@ -19,7 +19,6 @@ class Item:
 def get_items():
     these_items=[]
     open_cards = get_open_cards_in_lists_from_board_id(os.getenv('BOARD_ID'));
-    print(open_cards)
     for list in open_cards:
         for card in list['cards']:
             item = Item.from_trello_card(card, list)

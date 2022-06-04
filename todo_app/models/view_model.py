@@ -50,7 +50,6 @@ class ViewModel:
         older_done_doings = []
         today = datetime.now()
         for this_item in self.items:
-            print('this_item.dateLastActivity='+str(this_item.dateLastActivity))
             then = datetime.strptime(this_item.dateLastActivity, '%Y-%m-%dT%H:%M:%S.%fZ')
             if then.date() < today.date():
                 older_done_doings.append(this_item)
