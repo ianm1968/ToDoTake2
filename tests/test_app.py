@@ -108,24 +108,30 @@ def board_five_in_done_today():
     return test_list   
 
 @pytest.fixture
-def board_one_each_done_today_yesterday_last_week_tomorrow():
+def board_done_1today_2yesterday_3last_week_4tomorrow():
     test_list=[]
     today = datetime.now()
     tomorrow = today + timedelta(days=1)
     yesterday = today - timedelta(days=1)
     lastweek = today - timedelta(days=7)
     today_str = datetime.strftime(today,'%Y-%m-%dT%H:%M:%S.%fZ')
-    tomorrow_str = datetime.strftime(tomorrow,'%Y-%m-%dT%H:%M:%S.%fZ')
     yesterday_str = datetime.strftime(yesterday,'%Y-%m-%dT%H:%M:%S.%fZ')
     lastweek_str = datetime.strftime(lastweek,'%Y-%m-%dT%H:%M:%S.%fZ')
+    tomorrow_str = datetime.strftime(tomorrow,'%Y-%m-%dT%H:%M:%S.%fZ')
 
     test_item = Item(name='Tom is done today', dateLastActivity = today_str, status='Done')
     test_list.append(test_item)
     test_item = Item(name='Dick is done yesterday', dateLastActivity = yesterday_str, status='Done')
     test_list.append(test_item)
+    test_list.append(test_item)
     test_item = Item(name='Harry is done last week',dateLastActivity = lastweek_str, status='Done')
     test_list.append(test_item)
+    test_list.append(test_item)
+    test_list.append(test_item)
     test_item = Item(name='Nobody can be done tomorrow',dateLastActivity = tomorrow_str, status='Done')
+    test_list.append(test_item)
+    test_list.append(test_item)
+    test_list.append(test_item)
     test_list.append(test_item)
 
     return test_list    
@@ -222,12 +228,12 @@ def test_should_show_all_five_done_today(board_five_in_done_today):
     test_items=ViewModel(board_five_in_done_today)
     assert test_items.should_show_all_done_items == False #really a 'dont care'
 
-def test_done_today_items(board_one_each_done_today_yesterday_last_week_tomorrow):
-    test_items=ViewModel(board_one_each_done_today_yesterday_last_week_tomorrow)
+def test_done_today_items(board_done_1today_2yesterday_3last_week_4tomorrow):
+    test_items=ViewModel(board_done_1today_2yesterday_3last_week_4tomorrow)
     assert len(test_items.done_today_items) == 1
     
 
-def test_done_before_today_items(board_one_each_done_today_yesterday_last_week_tomorrow):
-    test_items=ViewModel(board_one_each_done_today_yesterday_last_week_tomorrow)
-    assert len(test_items.done_before_today_items) == 2
+def test_done_before_today_items(board_done_1today_2yesterday_3last_week_4tomorrow):
+    test_items=ViewModel(board_done_1today_2yesterday_3last_week_4tomorrow)
+    assert len(test_items.done_before_today_items) == 5
     
