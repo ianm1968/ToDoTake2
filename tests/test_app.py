@@ -1,5 +1,4 @@
 # from todo_app.data.trello_items import Item # <<< DONT KNOW WHY I CANT IMPORT THIS WITHOUT CAUSING TEST DISCOVERY ISSUES
-from subprocess import CompletedProcess
 import pytest
 from todo_app.models.view_model import ViewModel
 from datetime import datetime, timedelta
