@@ -60,20 +60,6 @@ def get_list_id_from_name(name):
             return list['id']
     return None  
 
-def get_board_id_from_name(name):
-    url = f"{HOME}/members/{name}"
-    response = requests.get(url,params={
-        'key':os.getenv('API_KEY'), 
-        'token':os.getenv('TOKEN')})
-    return response.json()['id']
-
-def get_member_id_from_name(name):
-    url = f"{HOME}/members/{name}"
-    response = requests.get(url,params={
-        'key':os.getenv('API_KEY'), 
-        'token':os.getenv('TOKEN')})
-    return response.json()['id']
-
 def get_lists_from_board_id(board_id):
     url = f"{HOME}/boards/{board_id}/lists"
     response = requests.get(url,params={
