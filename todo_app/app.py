@@ -16,7 +16,6 @@ def create_app():
         view_model = ViewModel(these_items)
         return render_template('index.html',view_model=view_model)
         
-        
     @app.route('/add', methods=['POST'])
     def add_item_by_title():
         add_item(request.form.get('task_title'))
@@ -56,7 +55,6 @@ def create_app():
         if id_to_delete != None:
             delete_item(id_to_delete)
         return redirect('/')
-    
     return app
 
 

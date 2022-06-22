@@ -25,7 +25,7 @@ def get_items():
             these_items.append(item)            
     return these_items
     
-def add_item(title):
+def add_item(title, list_name):
     list_id=get_list_id_from_name(os.getenv('DEFAULT_TO_DO_NAME'))
     added = add_card_to_list_by_list_id(title, list_id)
     return added
@@ -53,18 +53,12 @@ def delete_item(id):
 def get_list_id_from_name(name):
     # get lists
     # iterate to find matching id
-    lists = get_lists_from_board_id(os.getenv('BOARD_ID'))
+    lists = get_open_cards_in_lists_from_board_id(os.getenv('BOARD_ID'))
     for list in lists:
         if list['name'] == name:
             return list['id']
     return None  
 
-def get_lists_from_board_id(board_id):
-    url = f"{HOME}/boards/{board_id}/lists"
-    response = requests.get(url,params={
-        'key':os.getenv('API_KEY'), 
-        'token':os.getenv('TOKEN')})
-    return response.json()
 
 def get_open_cards_in_lists_from_board_id(board_id):
     url = f"{HOME}/boards/{board_id}/lists"
@@ -82,14 +76,14 @@ def amend_card_by_id(card_id, name, list_id, desc='', due='' ):
         'idList':list_id,
         'key':os.getenv('API_KEY'),
         'token':os.getenv('TOKEN')})
-    return response.status_code 
+    return (response.status_code == 200)
 
 def delete_card_by_card_id(card_id):
     url = f"{HOME}/cards/{card_id}"
     response = requests.delete(url,params={
         'key':os.getenv('API_KEY'), 
         'token':os.getenv('TOKEN')})
-    return response.json()  
+    return (response.status_code == 200)  
       
 def add_card_to_list_by_list_id(card_name, list_id):
     url = f"{HOME}/cards"
@@ -98,7 +92,11 @@ def add_card_to_list_by_list_id(card_name, list_id):
         'idList':list_id,
         'key':os.getenv('API_KEY'),
         'token':os.getenv('TOKEN')})
-    return response.status_code    
+    print(response)
+    # print(response.json())
+    print(response.headers)
+    print(response.status_code)
+    return (response.status_code == 200)     
 
 
       
