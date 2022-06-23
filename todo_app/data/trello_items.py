@@ -25,7 +25,7 @@ def get_items():
             these_items.append(item)            
     return these_items
     
-def add_item(title, list_name):
+def add_item(title):
     list_id=get_list_id_from_name(os.getenv('DEFAULT_TO_DO_NAME'))
     added = add_card_to_list_by_list_id(title, list_id)
     return added
