@@ -92,10 +92,6 @@ def add_card_to_list_by_list_id(card_name, list_id):
         'idList':list_id,
         'key':os.getenv('API_KEY'),
         'token':os.getenv('TOKEN')})
-    print(response)
-    # print(response.json())
-    print(response.headers)
-    print(response.status_code)
     return (response.status_code == 200)     
 
 

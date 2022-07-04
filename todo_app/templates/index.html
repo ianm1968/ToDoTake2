@@ -1,3 +1,4 @@
+
 {% extends "layout.html" %}
 
 {% block title %}To-Do App{% endblock %}
@@ -103,7 +104,10 @@
     </ul>
     <ul class="list-group"> 
       <li class="list-group-item  bg-success text-white d-flex">
-        <h2 class="p-0 m-2 flex-grow-1 ">Done Before Today</p> 
+        <h2 class="p-0 m-2 flex-grow-1 ">Done Before Today</h2>
+          <button type="submit" class="btn btn-default btn-sm" data-toggle="button" aria-pressed={{view_model.should_show_all_done_items}} autocomplete="off">
+            <span class="glyphicon glyphicon-save"></span>
+          </button>
       </li>
   
       {% for item in view_model.done_before_today_items %}
@@ -121,4 +125,20 @@
         </form>
       {% endfor %}
     </ul>
-  {% endblock %}
+    <h2>Should show = {{view_model.should_show_all_done_items}}</h2>
+  <body>
+      <input type="text" id="txt" onkeyup="manage(this)" />
+      <input type="submit" id="btSubmit" disabled value="Submit" />
+  </body>
+  <script>
+      function manage(txt) {
+          var bt = document.getElementById('btSubmit');
+        if ({{view_model.should_show_all_done_items}}) {
+            bt.disabled = true;
+        }
+        else {
+            bt.disabled = false;
+        }
+      }
+  </script>    
+    {% endblock %}
