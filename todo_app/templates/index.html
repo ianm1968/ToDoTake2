@@ -31,7 +31,7 @@
       <form method="post" >
         <li class="list-group-item  bg-danger text-white d-flex">
           <button type="submit" formaction="/start" class="btn btn-default btn-sm">
-            <span class="glyphicon glyphicon-ok"></span>
+            <span class="glyphicon glyphicon-play"></span>
           </button>
           <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
           <h3 class="p-0 m-2 flex-grow-1 ">{{item.name}}</h3> 
@@ -42,6 +42,7 @@
       </form>
     {% endfor %}
   </ul>
+  
   <ul class="list-group"> 
     <li class="list-group-item  bg-warning text-white d-flex">
       <h2 class="p-0 m-2 flex-grow-1 ">Doing</p> 
@@ -64,10 +65,11 @@
       </form>
     {% endfor %}
   </ul>
+  <ul class="list-group"> 
+    {% if view_model.should_show_all_done_items == True %}
     <li class="list-group-item  bg-success text-white d-flex">
       <h2 class="p-0 m-2 flex-grow-1 ">Done</p> 
     </li>
-    <ul class="list-group"> 
       {% for item in view_model.done_items %}
         <form method="post" >
           <li class="list-group-item  bg-success text-white d-flex">
@@ -83,62 +85,48 @@
         </form>
       {% endfor %}
     </ul>
+    {% else %}
     <ul class="list-group"> 
       <li class="list-group-item  bg-success text-white d-flex">
-        <h2 class="p-0 m-2 flex-grow-1 ">Done Today</p> 
+        <h2 class="p-0 m-2 flex-grow-1 ">Done</p> 
       </li>
         {% for item in view_model.done_today_items %}
-        <form method="post" >
+          <form method="post" >
+            <li class="list-group-item  bg-success text-white d-flex">
+              <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
+              <button type="submit" formaction="/restore" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-repeat"></span>
+              </button>
+              <h3 class="p-0 m-2 flex-grow-1 ">{{item.name}}</h3> 
+              <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+            </li>
+          </form>
+        {% endfor %}
+      </ul>
+      <details>
+        <summary>
+          <ul class="list-group"> 
           <li class="list-group-item  bg-success text-white d-flex">
-            <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
-            <button type="submit" formaction="/restore" class="btn btn-default btn-sm">
-              <span class="glyphicon glyphicon-repeat"></span>
-            </button>
-            <h3 class="p-0 m-2 flex-grow-1 ">{{item.name}}</h3> 
-            <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
-              <span class="glyphicon glyphicon-trash"></span>
-            </button>
-          </li>
-        </form>
-      {% endfor %}
-    </ul>
-    <ul class="list-group"> 
-      <li class="list-group-item  bg-success text-white d-flex">
-        <h2 class="p-0 m-2 flex-grow-1 ">Done Before Today</h2>
-          <button type="submit" class="btn btn-default btn-sm" data-toggle="button" aria-pressed={{view_model.should_show_all_done_items}} autocomplete="off">
-            <span class="glyphicon glyphicon-save"></span>
-          </button>
-      </li>
-  
-      {% for item in view_model.done_before_today_items %}
-        <form method="post" >
-          <li class="list-group-item  bg-success text-white d-flex">
-            <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
-            <button type="submit" formaction="/restore" class="btn btn-default btn-sm">
-              <span class="glyphicon glyphicon-repeat"></span>
-            </button>
-            <h2 class="p-0 m-2 flex-grow-1 ">{{item.name}}</h2> 
-            <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
-              <span class="glyphicon glyphicon-trash"></span>
-            </button>
-          </li>
-        </form>
-      {% endfor %}
-    </ul>
-    <h2>Should show = {{view_model.should_show_all_done_items}}</h2>
-  <body>
-      <input type="text" id="txt" onkeyup="manage(this)" />
-      <input type="submit" id="btSubmit" disabled value="Submit" />
-  </body>
-  <script>
-      function manage(txt) {
-          var bt = document.getElementById('btSubmit');
-        if ({{view_model.should_show_all_done_items}}) {
-            bt.disabled = true;
-        }
-        else {
-            bt.disabled = false;
-        }
-      }
-  </script>    
-    {% endblock %}
+        <h2 class="p-0 m-2 flex-grow-1 "><span class="glyphicon glyphicon-play"></span> Done Before Today</h2>
+        </li>
+        </summary>
+        {% for item in view_model.done_before_today_items %}
+          <form method="post" >
+            <li class="list-group-item  bg-success text-white d-flex">
+              <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
+              <button type="submit" formaction="/restore" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-repeat"></span>
+              </button>
+              <h3 class="p-0 m-2 flex-grow-1 ">{{item.name}}</h3> 
+              <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+            </li>
+          </form>
+        {% endfor %}
+      </details>
+    {% endif %}
+  </ul>
+  {% endblock %}

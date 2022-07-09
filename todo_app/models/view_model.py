@@ -4,21 +4,13 @@ import os
 
 class ViewModel:
 
-    def __init__(self, items,show_all_done_is_selected = False):
+    def __init__(self, items):
          self._items = items
-         self._show_all_done_is_selected = show_all_done_is_selected
     
     @property
     def items(self):
         return self._items
     
-    @property
-    def show_all_done_is_selected(self):
-        return self._show_all_done_is_selected
-    
-    @show_all_done_is_selected.setter
-    def show_all_done_is_selected(self,showing):
-        self._show_all_done_is_selected = showing
     
     @property
     def to_do_items(self):
@@ -63,12 +55,8 @@ class ViewModel:
 
     @property
     def should_show_all_done_items(self):
-        # True if less that 5 done (any time)
-        # or if the user selects to show them all   
-        # or if all items are done today
-        selected = self._show_all_done_is_selected
-        total_count = len(self.done_items)
-        return (selected or total_count<5)
+        no_items_done_before_today = len(self.done_before_today_items) == 0
+        less_than_five_done_any_time = len(self.done_items) < 5
+        return (no_items_done_before_today or less_than_five_done_any_time)
     
-    # toggle button enabled     
 
