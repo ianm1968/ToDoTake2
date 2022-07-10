@@ -160,21 +160,11 @@ def board_one_hundred_in_each():
         i += 1
     return test_list    
 
-@pytest.fixture
-def showing_false():
-    return False
-
-@pytest.fixture
-def showing_true():
-    return True
-
-
 def test_no_items():
     test_model=ViewModel([])
     assert len(test_model.to_do_items) == 0
     assert len(test_model.doing_items) == 0
     assert len(test_model.done_items) == 0
-
 
 def test_one_in_to_do(board_one_in_to_do):
     test_model=ViewModel(board_one_in_to_do)
@@ -225,7 +215,7 @@ def test_should_show_all_four_done_today(board_four_in_done_today):
 
 def test_should_show_all_five_done_today(board_five_in_done_today):
     test_items=ViewModel(board_five_in_done_today)
-    assert test_items.should_show_all_done_items == False #really a 'dont care'
+    assert test_items.should_show_all_done_items == True
 
 def test_done_today_items(board_done_1today_2yesterday_3last_week_4tomorrow):
     test_items=ViewModel(board_done_1today_2yesterday_3last_week_4tomorrow)

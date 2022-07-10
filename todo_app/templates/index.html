@@ -4,20 +4,19 @@
 {% block title %}To-Do App{% endblock %}
 
 {% block content %}
-  <div class="jumbotron">
+  <div class="jumbotron text-white bg-dark ">
     <h1 class="display-4">To-Do App</h1>
-    <p class="lead">Ian M's super dooper To-Do app-a-doodle.</p>
+    <p class="lead">Ian M's super dooper To-Do app-a-doodle-do.</p>
   </div>
-
   <form method="post" >
-    <li class="list-group-item  bg-light d-flex">
+    <li class="list-group-item text-white bg-dark d-flex">
       <h2 class="p-0 m-2 flex-grow-1 ">Add</p> 
     </li>
       <ul class="list-group"> 
-        <li class="list-group-item  bg-light d-flex">
+        <li class="list-group-item  bg-dark d-flex">
           <button class="btn btn-default" type="submit" formaction="/add">
             <i class="glyphicon glyphicon-save"></i></button>
-          <input name="task_title" type="text" class="form-control" required>
+          <input name="task_title" style='font-size: 20px;' type="text" class="form-control" required>
         </li>
       </ul>
   </form>
@@ -72,15 +71,19 @@
     </li>
       {% for item in view_model.done_items %}
         <form method="post" >
-          <li class="list-group-item  bg-success text-white d-flex">
-            <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
-            <button type="submit" formaction="/restore" class="btn btn-default btn-sm">
-              <span class="glyphicon glyphicon-repeat"></span>
-            </button>
-            <h3 class="p-0 m-2 flex-grow-1 ">{{item.name}}</h3> 
-            <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
-              <span class="glyphicon glyphicon-trash"></span>
-            </button>
+          {% if item in view_model.done_today_items%}
+            <li class="list-group-item  bg-success text-white d-flex">
+          {% else %}
+            <li class="list-group-item  bg-info text-white d-flex">
+          {% endif %}
+          <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
+          <button type="submit" formaction="/restore" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-repeat"></span>
+          </button>
+          <h3 class="p-0 m-2 flex-grow-1 ">{{item.name}}</h3> 
+          <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
           </li>
         </form>
       {% endfor %}
@@ -105,16 +108,16 @@
           </form>
         {% endfor %}
       </ul>
-      <details>
+      <details open>
         <summary>
           <ul class="list-group"> 
-          <li class="list-group-item  bg-success text-white d-flex">
-        <h2 class="p-0 m-2 flex-grow-1 "><span class="glyphicon glyphicon-play"></span> Done Before Today</h2>
+          <li class="list-group-item  bg-info text-white d-flex">
+        <h2 class="p-0 m-2 flex-grow-1 "><span class="glyphicon glyphicon-plus"></span> Done Before Today</h2>
         </li>
         </summary>
         {% for item in view_model.done_before_today_items %}
           <form method="post" >
-            <li class="list-group-item  bg-success text-white d-flex">
+            <li class="list-group-item  bg-info text-white d-flex">
               <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
               <button type="submit" formaction="/restore" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-repeat"></span>

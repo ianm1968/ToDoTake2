@@ -3,16 +3,19 @@
 ## To Do checklist overview
 
 This demonstration webapp uses Flask and poetry for development.  See below for details.  The application can be accessed on  a standard browser via HTTP port 5000. E.g. https://{server-ip-address-goes-here}:5000
+## Using the app
 
 The app allows the user to enter an item into a To Do list.
 
- - Enter the task text in the 'Task' edit
- - Click Add button - it will be added to the 'To Do' list in the app.
- - Tick a 'To Do' task  - it will move to the 'Doing' list.
- - Tick a 'Doing' task  - it will move to the 'Done' list.
+ - Enter the task text in the 'Task' edit at the top (black panel).
+ - Click **'Add'** button - it will be added to the **'To Do' list (red panel)**.
+ - Click the **'Start'** button on a 'To Do' task  - it will move to the **'Doing' list (yellow panel)***.
+ - Click the **Done (tick)** button on a 'Doing' task  - it will move to the **'Done' list (green panel)**.
  - Restore a 'Done' task - it will move back to the 'To Do' list
- - Delete any task from either the 'To Do' or 'Done' list.
- 
+ - **Delete** any task in any list using the **'Delete' button**
+- **Note 1:** items are sorted in lists strictly on descending date/time
+- **Note 2:** the **Done list** will always show items done today in **green** and items done before today in **blue**.  However if there are 5 or more in total, any done before today will be shown in **a separate 'Done before today' details list (blue panel)** which can be hidden by clicking on the header.
+
 ## Configuration using .env
 A starter `.env.template` file is  provided but must be filled in using values as follows and renamed `.env`
 ```bash
