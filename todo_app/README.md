@@ -1,11 +1,11 @@
 # DevOps Apprenticeship: To Do Checklist exercise-1
 
-## To Do checklist overview
+## To Do App overview
 
-This demonstration webapp uses Flask and poetry for development.  See below for details.  The application can be accessed on  a standard browser via HTTP port 5000. E.g. https://{server-ip-address-goes-here}:5000
+This webapp uses Flask and poetry for development.  See below for details.  The application can be accessed on  a standard browser via HTTP port 5000. E.g. https://{server-ip-address-goes-here}:5000
 ## Using the app
 
-The app allows the user to enter an item into a To Do list.
+The app allows the user to create a 'To Do' item and track and update its progress using **To Do**, **Doing** and **Done** lists.
 
  - Enter the task text in the 'Task' edit at the top (black panel).
  - Click **'Add'** button - it will be added to the **'To Do' list (red panel)**.
@@ -14,7 +14,7 @@ The app allows the user to enter an item into a To Do list.
  - Restore a 'Done' task - it will move back to the 'To Do' list
  - **Delete** any task in any list using the **'Delete' button**
 - **Note 1:** items are sorted in lists strictly on descending date/time
-- **Note 2:** the **Done list** will always show items done today in **green** and items done before today in **blue**.  However if there are 5 or more in total, any done before today will be shown in **a separate 'Done before today' details list (blue panel)** which can be hidden by clicking on the header.
+- **Note 2:** the **Done list** will always show items done today in **green** and items done before today in **blue**.  However if there are 5 or more in total, any done before today will be shown in **a separate 'Done before today' details list (blue panel)** which can be hidden by clicking on the header.  All items in this list can be deleted in one action using the delete in the list header.
 
 ## Configuration using .env
 A starter `.env.template` file is  provided but must be filled in using values as follows and renamed `.env`
@@ -84,14 +84,10 @@ You should see output similar to the following:
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
 
 ## Running the Tests
-
-Current pytest test cases cover...
- - no items
- - one item in To Do
- - one item in Doing
- - one item in Done
- - one item in each list
- - one hudred items in each
+### Pytest Tests
+Current pytest test cases cover a number of scenarios each with different numbers of items in each list and asserting ...
+ -  the expected number of items in the various lists
+  - whether the app should show all **Done** items in one list or break Done items into **Done (done today)** and **Done Before Today**.  
 
 Presently running the tests pass as expected when run from Test Explorer but not from commandline (unexpected assertion errors happen, to be investigated).
 
@@ -99,3 +95,8 @@ Each test takes a fixture (list of Items) as a parameter and passes.  It can be 
  - if the wrong fixture is used when calling e.g. no items fixture to a test such as test_one_in_each
   - if the assertions made re: the number of Items in the list are altered
  
+
+ ### Integration Tests (Monkeypatch)
+ A test case is provided to test the index rot page using a monkeypatch stub.  The test asserts...
+  - positive web server response (200)
+  - expected mocked data in one of the mocked to do items 
