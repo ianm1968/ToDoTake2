@@ -4,6 +4,7 @@
 {% block title %}To-Do App{% endblock %}
 
 {% block content %}
+
   <div class="jumbotron text-white bg-dark ">
     <h1 class="display-4">To-Do App</h1>
     <p class="lead">Ian M's super dooper To-Do app-a-doodle-do.</p>
@@ -110,10 +111,15 @@
       </ul>
       <details open>
         <summary>
-          <ul class="list-group"> 
-          <li class="list-group-item  bg-info text-white d-flex">
-        <h2 class="p-0 m-2 flex-grow-1 "><span class="glyphicon glyphicon-plus"></span> Done Before Today</h2>
-        </li>
+          <form method="post" >
+            <ul class="list-group"> 
+            <li class="list-group-item  bg-info text-white d-flex">
+              <h2 class="p-0 m-2 flex-grow-1 "><span class="glyphicon glyphicon-plus"></span> Done Before Today</h2>
+              <button type="submit" formaction="/purge_done_before_today" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+            </li>
+          </form>
         </summary>
         {% for item in view_model.done_before_today_items %}
           <form method="post" >
@@ -132,4 +138,4 @@
       </details>
     {% endif %}
   </ul>
-  {% endblock %}
+{% endblock %}

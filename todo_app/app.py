@@ -55,7 +55,18 @@ def create_app():
         if id_to_delete != None:
             delete_item(id_to_delete)
         return redirect('/')
+
+    @app.route('/purge_done_before_today', methods=['POST'])
+    def purge_done_before_today():
+        these_items = get_items()
+        view_model = ViewModel(these_items)
+        for item in view_model.done_before_today_items:
+            if item.id != None:
+                delete_item(item.id)
+        return redirect('/')
+
     return app
+
 
 
 
