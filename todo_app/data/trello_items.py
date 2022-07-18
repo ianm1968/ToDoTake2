@@ -43,8 +43,8 @@ def save_item(item):
         item: The item to save.
     """
     list_id=get_list_id_from_name(item.status)
-    result = amend_card_by_id( item.id, item.name, list_id)
-    return result
+    saved = amend_card_by_id( item.id, item.name, list_id)
+    return saved
 
 def delete_item(id):
     deleted = delete_card_by_card_id(id)
@@ -68,7 +68,6 @@ def get_open_cards_in_lists_from_board_id(board_id):
         'cards':'open'})
     return response.json()
 
-
 def amend_card_by_id(card_id, name, list_id, desc='', due='' ):
     url = f"{HOME}/cards/{card_id}"
     response = requests.put(url,params={
@@ -76,14 +75,14 @@ def amend_card_by_id(card_id, name, list_id, desc='', due='' ):
         'idList':list_id,
         'key':os.getenv('API_KEY'),
         'token':os.getenv('TOKEN')})
-    return (response.status_code == 200)
+    return response.ok
 
 def delete_card_by_card_id(card_id):
     url = f"{HOME}/cards/{card_id}"
     response = requests.delete(url,params={
         'key':os.getenv('API_KEY'), 
         'token':os.getenv('TOKEN')})
-    return (response.status_code == 200)  
+    return response.ok  
       
 def add_card_to_list_by_list_id(card_name, list_id):
     url = f"{HOME}/cards"
@@ -92,9 +91,4 @@ def add_card_to_list_by_list_id(card_name, list_id):
         'idList':list_id,
         'key':os.getenv('API_KEY'),
         'token':os.getenv('TOKEN')})
-    return (response.status_code == 200)     
-
-
-      
-    
-
+    return response.ok     
