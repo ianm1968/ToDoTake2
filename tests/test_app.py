@@ -123,6 +123,7 @@ def test_no_items():
 def test_one_in_to_do(board_one_in_to_do):
     test_model=ViewModel(board_one_in_to_do)
     assert len(test_model.to_do_items) == 1
+    assert test_model.to_do_items[0].status == 'To Do'
     assert len(test_model.doing_items) == 0
     assert len(test_model.done_items) == 0
  
@@ -131,6 +132,7 @@ def test_one_in_doing(board_one_in_doing):
     test_model=ViewModel(board_one_in_doing)
     assert len(test_model.to_do_items) == 0
     assert len(test_model.doing_items) == 1
+    assert test_model.doing_items[0].status == 'Doing'
     assert len(test_model.done_items) == 0
 
 def test_one_in_done(board_one_in_done):
@@ -138,12 +140,17 @@ def test_one_in_done(board_one_in_done):
     assert len(test_model.to_do_items) == 0
     assert len(test_model.doing_items) == 0
     assert len(test_model.done_items) == 1
+    assert test_model.done_items[0].status == 'Done'
 
 def test_one_in_each(board_one_in_each):
     test_model=ViewModel(board_one_in_each)
     assert len(test_model.to_do_items) == 1
     assert len(test_model.doing_items) == 1
     assert len(test_model.done_items) == 1
+    assert test_model.to_do_items[0].status == 'To Do'
+    assert test_model.doing_items[0].status == 'Doing'
+    assert test_model.done_items[0].status == 'Done'
+    
 
 def test_one_hundred_in_each(board_one_hundred_in_each):
     test_model=ViewModel(board_one_hundred_in_each)
