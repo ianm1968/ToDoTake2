@@ -5,24 +5,17 @@ from datetime import datetime, timedelta
 
 @pytest.fixture
 def board_one_in_to_do():
-    test_item = Item(id=0,name='fred',status='To Do')
-    test_list=[]
-    test_list.append(test_item)
+    test_list = [Item(id=0,name='fred',status='To Do')]
     return test_list    
 
 @pytest.fixture
 def board_one_in_doing():
-    test_item = Item(id=0,name='fred',status='Doing')
-    test_list=[]
-    test_list.append(test_item)
+    test_list = [Item(id=0,name='fred',status='Doing')]
     return test_list    
 
 @pytest.fixture
 def board_one_in_done():
-    test_item = Item(id=0,name='fred',status='Done')
-    test_item.dateLastActivity = '123'
-    test_list=[]
-    test_list.append(test_item)
+    test_list = [Item(id=0,name='fred',status='Done')]
     return test_list    
 
 @pytest.fixture
@@ -32,11 +25,9 @@ def board_done_three_today_one_yesterday():
     today_str = datetime.strftime(today,'%Y-%m-%dT%H:%M:%S.%fZ')
     yesterday_str = datetime.strftime(yesterday,'%Y-%m-%dT%H:%M:%S.%fZ')
     test_list=[]
-    test_item = Item(id=0,name='Dick',status='Done',dateLastActivity=today_str)
     for i in range(3):
-        test_list.append(test_item)
-    test_item = Item(id=0,name='Harry',status='Done',dateLastActivity=yesterday_str)
-    test_list.append(test_item)
+        test_list.append(Item(id=0,name='Dick',status='Done',dateLastActivity=today_str))
+    test_list.append(Item(id=0,name='Harry',status='Done',dateLastActivity=yesterday_str))
     return test_list      
 
 @pytest.fixture
@@ -46,12 +37,10 @@ def board_done_three_today_two_yesterday():
     today_str = datetime.strftime(today,'%Y-%m-%dT%H:%M:%S.%fZ')
     yesterday_str = datetime.strftime(yesterday,'%Y-%m-%dT%H:%M:%S.%fZ')
     test_list=[]
-    test_item = Item(id=0,name='Dick',status='Done',dateLastActivity=today_str)
     for i in range(3):
-        test_list.append(test_item)
+        test_list.append(Item(id=0,name='Dick',status='Done',dateLastActivity=today_str))
     for i in range(2):
-        test_item = Item(id=i,name='Harry',status='Done',dateLastActivity=yesterday_str)
-        test_list.append(test_item)
+        test_list.append(Item(id=i,name='Harry',status='Done',dateLastActivity=yesterday_str))
     return test_list      
 
 @pytest.fixture
@@ -61,31 +50,25 @@ def board_done_four_today_one_yesterday():
     today_str = datetime.strftime(today,'%Y-%m-%dT%H:%M:%S.%fZ')
     yesterday_str = datetime.strftime(yesterday,'%Y-%m-%dT%H:%M:%S.%fZ')
     test_list=[]
-    test_item = Item(id=0,name='Dick',status='Done',dateLastActivity=today_str)
     for i in range(4):
-        test_list.append(test_item)
-    test_item = Item(id=i,name='Harry',status='Done',dateLastActivity=yesterday_str)
-    test_list.append(test_item)
+        test_list.append(Item(id=0,name='Dick',status='Done',dateLastActivity=today_str))
+    test_list.append(Item(id=i,name='Harry',status='Done',dateLastActivity=yesterday_str))
     return test_list      
 
 @pytest.fixture
 def board_four_in_done_today():
-    today = datetime.now()
-    today_str = datetime.strftime(today,'%Y-%m-%dT%H:%M:%S.%fZ')
+    today_str = datetime.strftime(datetime.now(),'%Y-%m-%dT%H:%M:%S.%fZ')
     test_list=[]
-    test_item = Item(id=0,name='Harry',status='Done',dateLastActivity=today_str)
     for i in range(4):
-        test_list.append(test_item)
+        test_list.append(Item(id=0,name='Harry',status='Done',dateLastActivity=today_str))
     return test_list      
 
 @pytest.fixture
 def board_five_in_done_today():
-    today = datetime.now()
-    today_str = datetime.strftime(today,'%Y-%m-%dT%H:%M:%S.%fZ')
+    today_str = datetime.strftime(datetime.now(),'%Y-%m-%dT%H:%M:%S.%fZ')
     test_list=[]
-    test_item = Item(id=0,name='Harry',status='Done',dateLastActivity=today_str)
     for i in range(5):
-        test_list.append(test_item)
+        test_list.append(Item(id=0,name='Harry',status='Done',dateLastActivity=today_str))
     return test_list   
 
 @pytest.fixture
@@ -99,14 +82,11 @@ def board_done_1today_2yesterday_3last_week_4tomorrow():
     yesterday_str = datetime.strftime(yesterday,'%Y-%m-%dT%H:%M:%S.%fZ')
     lastweek_str = datetime.strftime(lastweek,'%Y-%m-%dT%H:%M:%S.%fZ')
     tomorrow_str = datetime.strftime(tomorrow,'%Y-%m-%dT%H:%M:%S.%fZ')
-    test_item = Item(id=0,name='Tom is done today', dateLastActivity = today_str, status='Done')
-    test_list.append(test_item)
+    test_list.append(Item(id=0,name='Tom is done today', dateLastActivity = today_str, status='Done'))
     for i in range(2):
-        test_item = Item(id=0,name='Dick is done yesterday', dateLastActivity = yesterday_str, status='Done')
-        test_list.append(test_item)
+        test_list.append(Item(id=0,name='Dick is done yesterday', dateLastActivity = yesterday_str, status='Done'))
     for i in range(3):
-        test_item = Item(id=0,name='Harry is done last week',dateLastActivity = lastweek_str, status='Done')
-        test_list.append(test_item)
+        test_list.append(Item(id=0,name='Harry is done last week',dateLastActivity = lastweek_str, status='Done'))
     for i in range(4):
         test_item = Item(id=0,name='Nobody can be done tomorrow',dateLastActivity = tomorrow_str, status='Done')
         test_list.append(test_item)
@@ -114,13 +94,11 @@ def board_done_1today_2yesterday_3last_week_4tomorrow():
 
 @pytest.fixture
 def board_one_in_each():
-    tom_item = Item(id=0,name='Tom',status='To Do')
-    dick_item = Item(id=0,name='Dick',status='Doing')
-    harry_item = Item(id=0,name='Harry',status='Done')
-    test_list=[]
-    test_list.append(tom_item)
-    test_list.append(dick_item)
-    test_list.append(harry_item)
+    test_list=[
+        Item(id=0,name='Tom',status='To Do'),
+        Item(id=0,name='Dick',status='Doing'),
+        Item(id=0,name='Harry',status='Done')
+    ]
     return test_list    
 
 @pytest.fixture
