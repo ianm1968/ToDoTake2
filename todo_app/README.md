@@ -11,7 +11,7 @@ The app allows the user to create a 'To Do' item and track and update its progre
  - Click **'Add'** button - it will be added to the **'To Do' list (red panel)**.
  - Click the **'Start'** button on a 'To Do' task  - it will move to the **'Doing' list (yellow panel)***.
  - Click the **Done (tick)** button on a 'Doing' task  - it will move to the **'Done' list (green panel)**.
- - Restore a 'Done' task - it will move back to the 'To Do' list
+ - **Restart** a 'Done' task - it will move back to the 'To Do' list
  - **Delete** any task in any list using the **'Delete' button**
 - **Note 1:** items are sorted in lists strictly on descending date/time
 - **Note 2:** the **Done list** will always show items done today in **green** and items done before today in **blue**.  However if there are 5 or more in total, any done before today will be shown in **a separate 'Done before today' details list (blue panel)** which can be hidden by clicking on the header.  All items in this list can be deleted in one action using the delete in the list header.

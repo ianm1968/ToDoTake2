@@ -55,7 +55,7 @@
             <span class="glyphicon glyphicon-ok"></span>
           </button>
           <h3 class="p-0 m-2 flex-grow-1 ">{{item['name']}}</h3> 
-          <button type="submit" formaction="/restore" class="btn btn-default btn-sm">
+          <button type="submit" formaction="/restart" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-repeat"></span>
           </button>
           <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
@@ -78,7 +78,7 @@
             <li class="list-group-item  bg-info text-white d-flex">
           {% endif %}
           <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
-          <button type="submit" formaction="/restore" class="btn btn-default btn-sm">
+          <button type="submit" formaction="/restart" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-repeat"></span>
           </button>
           <h3 class="p-0 m-2 flex-grow-1 ">{{item.name}}</h3> 
@@ -98,7 +98,7 @@
           <form method="post" >
             <li class="list-group-item  bg-success text-white d-flex">
               <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
-              <button type="submit" formaction="/restore" class="btn btn-default btn-sm">
+              <button type="submit" formaction="/restart" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-repeat"></span>
               </button>
               <h3 class="p-0 m-2 flex-grow-1 ">{{item.name}}</h3> 
@@ -125,7 +125,7 @@
           <form method="post" >
             <li class="list-group-item  bg-info text-white d-flex">
               <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
-              <button type="submit" formaction="/restore" class="btn btn-default btn-sm">
+              <button type="submit" formaction="/restart" class="btn btn-default btn-sm">
                 <span class="glyphicon glyphicon-repeat"></span>
               </button>
               <h3 class="p-0 m-2 flex-grow-1 ">{{item.name}}</h3> 

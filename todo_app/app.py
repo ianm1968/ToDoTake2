@@ -39,13 +39,13 @@ def create_app():
             save_item(item_to_complete)
         return redirect('/')
 
-    @app.route('/restore', methods=['POST'])
-    def restore_item_by_id():
-        id_to_restore = request.form.get('task_id')
-        if id_to_restore != None:
-            item_to_restore = get_item( id_to_restore )
-            item_to_restore.status = os.getenv('DEFAULT_TO_DO_NAME')
-            save_item(item_to_restore)
+    @app.route('/restart', methods=['POST'])
+    def restart_item_by_id():
+        id_to_restart = request.form.get('task_id')
+        if id_to_restart != None:
+            item_to_restart = get_item( id_to_restart )
+            item_to_restart.status = os.getenv('DEFAULT_TO_DO_NAME')
+            save_item(item_to_restart)
         return redirect('/')
 
     @app.route('/delete', methods=['POST'])
