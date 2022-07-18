@@ -1,29 +1,29 @@
-from pydoc import describe
 import requests
 import os
 
 HOME = 'https://api.trello.com/1'
 
+
 class Item:
-    def __init__(self, id, name, status = 'To Do', desc = '', due = ''):
+    def __init__(self, id, name, dateLastActivity = '', status = 'To Do', desc = ''):
         self.id = id
         self.name = name
+        self.dateLastActivity = dateLastActivity
         self.status = status
         self.desc = desc
-        self.due = due
-    
+        
     @classmethod
     def from_trello_card(cls, card, list,):
-        return cls(card['id'], card['name'], list['name'], card['desc'], card['due']) 
+        return cls(card['id'], card['name'], card['dateLastActivity'], list['name'], card['desc'])#, card['due']) 
 
 def get_items():
-    items=[]
+    these_items=[]
     open_cards = get_open_cards_in_lists_from_board_id(os.getenv('BOARD_ID'));
     for list in open_cards:
         for card in list['cards']:
             item = Item.from_trello_card(card, list)
-            items.append(item)            
-    return items
+            these_items.append(item)            
+    return these_items
     
 def add_item(title):
     list_id=get_list_id_from_name(os.getenv('DEFAULT_TO_DO_NAME'))
@@ -31,8 +31,8 @@ def add_item(title):
     return added
     
 def get_item(id):
-    items = get_items()
-    return next((item for item in items if item.id == id), None)
+    these_items = get_items()
+    return next((item for item in these_items if item.id == id), None)
 
 
 def save_item(item):
@@ -43,8 +43,8 @@ def save_item(item):
         item: The item to save.
     """
     list_id=get_list_id_from_name(item.status)
-    result = amend_card_by_id( item.id, item.name, list_id)
-    return result
+    saved = amend_card_by_id( item.id, item.name, list_id)
+    return saved
 
 def delete_item(id):
     deleted = delete_card_by_card_id(id)
@@ -53,32 +53,12 @@ def delete_item(id):
 def get_list_id_from_name(name):
     # get lists
     # iterate to find matching id
-    lists = get_lists_from_board_id(os.getenv('BOARD_ID'))
+    lists = get_open_cards_in_lists_from_board_id(os.getenv('BOARD_ID'))
     for list in lists:
         if list['name'] == name:
             return list['id']
     return None  
 
-def get_board_id_from_name(name):
-    url = f"{HOME}/members/{name}"
-    response = requests.get(url,params={
-        'key':os.getenv('API_KEY'), 
-        'token':os.getenv('TOKEN')})
-    return response.json()['id']
-
-def get_member_id_from_name(name):
-    url = f"{HOME}/members/{name}"
-    response = requests.get(url,params={
-        'key':os.getenv('API_KEY'), 
-        'token':os.getenv('TOKEN')})
-    return response.json()['id']
-
-def get_lists_from_board_id(board_id):
-    url = f"{HOME}/boards/{board_id}/lists"
-    response = requests.get(url,params={
-        'key':os.getenv('API_KEY'), 
-        'token':os.getenv('TOKEN')})
-    return response.json()
 
 def get_open_cards_in_lists_from_board_id(board_id):
     url = f"{HOME}/boards/{board_id}/lists"
@@ -88,7 +68,6 @@ def get_open_cards_in_lists_from_board_id(board_id):
         'cards':'open'})
     return response.json()
 
-
 def amend_card_by_id(card_id, name, list_id, desc='', due='' ):
     url = f"{HOME}/cards/{card_id}"
     response = requests.put(url,params={
@@ -96,14 +75,14 @@ def amend_card_by_id(card_id, name, list_id, desc='', due='' ):
         'idList':list_id,
         'key':os.getenv('API_KEY'),
         'token':os.getenv('TOKEN')})
-    return response.status_code 
+    return response.ok
 
 def delete_card_by_card_id(card_id):
     url = f"{HOME}/cards/{card_id}"
     response = requests.delete(url,params={
         'key':os.getenv('API_KEY'), 
         'token':os.getenv('TOKEN')})
-    return response.json()  
+    return response.ok  
       
 def add_card_to_list_by_list_id(card_name, list_id):
     url = f"{HOME}/cards"
@@ -112,9 +91,4 @@ def add_card_to_list_by_list_id(card_name, list_id):
         'idList':list_id,
         'key':os.getenv('API_KEY'),
         'token':os.getenv('TOKEN')})
-    return response.status_code    
-
-
-      
-    
-
+    return response.ok     
