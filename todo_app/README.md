@@ -33,6 +33,11 @@ DEFAULT_DOING_NAME = doing-list-name
 
 DEFAULT_DONE_NAME = done-list-name
 ```
+Ensure you have a Trello account, create a board with **To Do, Doing and Done lists** names matching the default names you have entered.  Identify the value for BOARD_ID following these steps as taken from https://community.atlassian.com/t5/Trello-questions/How-to-get-Trello-Board-ID/qaq-p/1347525 ...
+1. Go to your Trello Board
+2. Add ".json" to end of the URL
+3. Format the JSON so it's readable (you can find a JSON viewer online)
+4. Search for idBoard - this will list your full Board ID.
 
 The project uses poetry for Python to create an isolated environment and manage package dependencies. To prepare your system, ensure you have an official distribution of Python version 3.7+ and install Poetry using one of the following commands (as instructed by the [poetry documentation](https://python-poetry.org/docs/#system-requirements)):
 
