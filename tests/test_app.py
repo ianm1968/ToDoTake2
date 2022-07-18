@@ -2,6 +2,10 @@ import pytest
 from todo_app.models.view_model import ViewModel
 from todo_app.data.trello_items import Item
 from datetime import datetime, timedelta
+from dotenv import load_dotenv, find_dotenv
+
+file_path = find_dotenv('.env.test')
+load_dotenv(file_path, override=True)
 
 @pytest.fixture
 def board_one_in_to_do():
