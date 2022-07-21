@@ -1,0 +1,92 @@
+---
+- name: Update managed nodes for To Do app
+  hosts: managed
+  become: yes
+  remote_user: ec2-user
+
+  vars_prompt:
+    - name: secretkey
+      prompt: secret-key
+      private: no
+    - name: trelloapikey
+      prompt: trello-api-key
+      private: no
+    - name: trellotoken
+      prompt: trello-token
+      private: no
+    - name: trellomemberid
+      prompt: trello-member-id
+      private: no
+    - name: trelloboardid
+      prompt: trello-board-id
+      private: no
+    - name: todolistname
+      prompt: to-do-list-name
+      private: no
+      default: "'To Do'"
+    - name: doingname
+      prompt: doing-name
+      private: no
+      default: "'Doing'"
+    - name: donename
+      prompt: done-name
+      private: no
+      default: "'Done'"
+
+  tasks:
+  - name: Ensure git is present
+    ansible.builtin.yum:
+      name: git
+      state: installed
+  
+  - name: Ensure python3 is present
+    ansible.builtin.yum:
+      name: python3
+      state: installed
+
+  - name: use curl to add poetry if default folder does not exist
+    ansible.builtin.shell: 'curl -sSL https://install.python-poetry.org | python3 -'
+    args:
+      creates: /local/bin/poetry
+# this never seemed to work - manaully installed on host :(
+
+
+  - name: Create /opt/todoapp directory if it does not exist
+    ansible.builtin.file:
+      path:  /opt/todoapp
+      state: directory
+      owner: ec2-user
+
+  - name: Git checkout
+    ansible.builtin.git:
+      repo: 'https://github.com/ianm1968/ToDoTake2'
+      dest: /opt/todoapp
+      version: Mod-3-automation
+
+  - name: Dependencies
+    ansible.builtin.shell: '~/.local/bin/poetry install'
+    args:
+      chdir: /opt/todoapp
+
+  - name: template the .env
+    ansible.builtin.template:
+      src: ~/.ansible/.env.j2
+      dest: /opt/todoapp/.env
+      owner: ec2-user
+      mode: u=rw,g=r,o=r
+
+  - name: Copy todoapp.service
+    ansible.builtin.copy:
+      src: ~/.ansible/todoapp.service
+      dest: /etc/systemd/system/todoapp.service
+      owner: ec2-user
+      mode: u=rw,g=r,o=r
+    become: yes
+
+  - name: Start todoapp
+    ansible.builtin.systemd:
+      state: restarted
+      daemon_reload: yes
+      name: todoapp.service
+    become: yes
+      
