@@ -51,8 +51,6 @@ def delete_item(id):
     return deleted
 
 def get_list_id_from_name(name):
-    # get lists
-    # iterate to find matching id
     lists = get_open_cards_in_lists_from_board_id(os.getenv('BOARD_ID'))
     for list in lists:
         if list['name'] == name:
