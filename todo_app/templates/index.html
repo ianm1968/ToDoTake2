@@ -1,64 +1,141 @@
+
 {% extends "layout.html" %}
 
 {% block title %}To-Do App{% endblock %}
 
 {% block content %}
-  <div class="jumbotron">
-    <h1 class="display-4">To-Do App</h1>
-    <p class="lead">Ian M's super dooper To-Do app-a-doodle.</p>
-  </div>
 
+  <div class="jumbotron text-white bg-dark ">
+    <h1 class="display-4">To-Do App</h1>
+    <p class="lead">Ian M's super dooper To-Do app-a-doodle-do.</p>
+  </div>
   <form method="post" >
-    <h2>Add</h2>
+    <li class="list-group-item text-white bg-dark d-flex">
+      <h2 class="p-0 m-2 flex-grow-1 ">Add</p> 
+    </li>
       <ul class="list-group"> 
-        <li class="list-group-item  bg-light d-flex">
-          <input name="task_title" type="text" class="form-control" required>
-          <button class="btn btn-default" type="submit" formaction="/add"><i class="glyphicon glyphicon-save"></i></button>
+        <li class="list-group-item  bg-dark d-flex">
+          <button class="btn btn-default" type="submit" formaction="/add">
+            <i class="glyphicon glyphicon-save"></i></button>
+          <input name="task_title" style='font-size: 20px;' type="text" class="form-control" required>
         </li>
       </ul>
   </form>
 
-  <h2>To Do</h2>
+
   <ul class="list-group"> 
-    {% for item in to_do_list %}
-      {% if item.status == "To Do" %}
-        <form method="post" >
-          <li class="list-group-item  bg-warning d-flex">
-            <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
-            <button type="submit" formaction="/complete" class="btn btn-default btn-sm">
-              <span class="glyphicon glyphicon-ok"></span>
-            </button>
-            <p class="p-0 m-2 flex-grow-1 ">{{item.name}}</p> 
-  <!-- I'll revisit 'edit' - rmeoved for the time being
-            <button type="submit" formaction="/complete" class="btn btn-default btn-sm">
-              <span class="glyphicon glyphicon-edit"></span>
-            </button>            
-  -->
-            <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
-              <span class="glyphicon glyphicon-trash"></span>
-            </button>
-          </li>
-        </form>
-      {% endif %}
+    <li class="list-group-item  bg-danger text-white d-flex">
+      <h2 class="p-0 m-2 flex-grow-1 ">To Do</p> 
+    </li>
+    {% for item in view_model.to_do_items %}
+      <form method="post" >
+        <li class="list-group-item  bg-danger text-white d-flex">
+          <button type="submit" formaction="/start" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-play"></span>
+          </button>
+          <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
+          <h3 class="p-0 m-2 flex-grow-1 ">{{item.name}}</h3> 
+          <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+        </li>
+      </form>
     {% endfor %}
   </ul>
-  <h2>Done</h2>
+  
   <ul class="list-group"> 
-    {% for item in to_do_list %}
-      {% if item.status != "To Do" %}
+    <li class="list-group-item  bg-warning text-white d-flex">
+      <h2 class="p-0 m-2 flex-grow-1 ">Doing</p> 
+    </li>
+    {% for item in view_model.doing_items %}
+      <form method="post" >
+        <li class="list-group-item  bg-warning text-white d-flex">
+          <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
+          <button type="submit" formaction="/complete" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-ok"></span>
+          </button>
+          <h3 class="p-0 m-2 flex-grow-1 ">{{item['name']}}</h3> 
+          <button type="submit" formaction="/restart" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-repeat"></span>
+          </button>
+          <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+        </li>
+      </form>
+    {% endfor %}
+  </ul>
+  <ul class="list-group"> 
+    {% if view_model.should_show_all_done_items == True %}
+    <li class="list-group-item  bg-success text-white d-flex">
+      <h2 class="p-0 m-2 flex-grow-1 ">Done</p> 
+    </li>
+      {% for item in view_model.done_items %}
         <form method="post" >
-          <li class="list-group-item  bg-success text-white d-flex">
-            <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
-            <button type="submit" formaction="/restore" class="btn btn-default btn-sm">
-              <span class="glyphicon glyphicon-repeat"></span>
-            </button>
-            <p class="p-0 m-2 flex-grow-1 ">{{item.name}}</p> 
-            <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
-              <span class="glyphicon glyphicon-trash"></span>
-            </button>
+          {% if item in view_model.done_today_items%}
+            <li class="list-group-item  bg-success text-white d-flex">
+          {% else %}
+            <li class="list-group-item  bg-info text-white d-flex">
+          {% endif %}
+          <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
+          <button type="submit" formaction="/restart" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-repeat"></span>
+          </button>
+          <h3 class="p-0 m-2 flex-grow-1 ">{{item.name}}</h3> 
+          <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
           </li>
         </form>
-      {% endif %}
-    {% endfor %}
+      {% endfor %}
+    </ul>
+    {% else %}
+    <ul class="list-group"> 
+      <li class="list-group-item  bg-success text-white d-flex">
+        <h2 class="p-0 m-2 flex-grow-1 ">Done</p> 
+      </li>
+        {% for item in view_model.done_today_items %}
+          <form method="post" >
+            <li class="list-group-item  bg-success text-white d-flex">
+              <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
+              <button type="submit" formaction="/restart" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-repeat"></span>
+              </button>
+              <h3 class="p-0 m-2 flex-grow-1 ">{{item.name}}</h3> 
+              <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+            </li>
+          </form>
+        {% endfor %}
+      </ul>
+      <details open>
+        <summary>
+          <form method="post" >
+            <ul class="list-group"> 
+            <li class="list-group-item  bg-info text-white d-flex">
+              <h2 class="p-0 m-2 flex-grow-1 "><span class="glyphicon glyphicon-plus"></span> Done Before Today</h2>
+              <button type="submit" formaction="/purge_done_before_today" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+            </li>
+          </form>
+        </summary>
+        {% for item in view_model.done_before_today_items %}
+          <form method="post" >
+            <li class="list-group-item  bg-info text-white d-flex">
+              <input type="hidden" id="task_id" name="task_id" value={{item.id}}>
+              <button type="submit" formaction="/restart" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-repeat"></span>
+              </button>
+              <h3 class="p-0 m-2 flex-grow-1 ">{{item.name}}</h3> 
+              <button type="submit" formaction="/delete" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+            </li>
+          </form>
+        {% endfor %}
+      </details>
+    {% endif %}
   </ul>
 {% endblock %}

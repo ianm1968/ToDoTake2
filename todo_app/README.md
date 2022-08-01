@@ -1,17 +1,21 @@
 # DevOps Apprenticeship: To Do Checklist exercise-1
 
-## To Do checklist overview
+## To Do App overview
 
-This demonstration webapp uses Flask and poetry for development.  See below for details.  The application can be accessed on  a standard browser via HTTP port 5000. E.g. https://{server-ip-address-goes-here}:5000
+This webapp uses Flask and poetry for development.  See below for details.  The application can be accessed on  a standard browser via HTTP port 5000. E.g. https://{server-ip-address-goes-here}:5000
+## Using the app
 
-The app allows the user to enter an item into a To Do list.
+The app allows the user to create a 'To Do' item and track and update its progress using **To Do**, **Doing** and **Done** lists.
 
- - Enter the task text in the 'Task' edit
- - Click Add button - it will be added to the 'To Do' list in the app.
- - Mark a 'To Do' task as complete - it will move to the 'Done' list.
- - Restore a 'Done' task - it will move back to the 'To Do' list
-  - Delete any task from either the 'To Do' or 'Done' list.
- 
+ - Enter the task text in the 'Task' edit at the top (black panel).
+ - Click **'Add'** button - it will be added to the **'To Do' list (red panel)**.
+ - Click the **'Start'** button on a 'To Do' task  - it will move to the **'Doing' list (yellow panel)***.
+ - Click the **Done (tick)** button on a 'Doing' task  - it will move to the **'Done' list (green panel)**.
+ - **Restart** a 'Done' task - it will move back to the 'To Do' list
+ - **Delete** any task in any list using the **'Delete' button**
+- **Note 1:** items are sorted in lists strictly on descending date/time
+- **Note 2:** the **Done list** will always show items done today in **green** and items done before today in **blue**.  However if there are 5 or more in total, any done before today will be shown in **a separate 'Done before today' details list (blue panel)** which can be hidden by clicking on the header.  All items in this list can be deleted in one action using the delete in the list header.
+
 ## Configuration using .env
 A starter `.env.template` file is  provided but must be filled in using values as follows and renamed `.env`
 ```bash
@@ -25,8 +29,15 @@ BOARD_ID = trello-board-id
 
 DEFAULT_TO_DO_NAME = to-do-list-name
 
+DEFAULT_DOING_NAME = doing-list-name
+
 DEFAULT_DONE_NAME = done-list-name
 ```
+Ensure you have a Trello account, create a board with **To Do, Doing and Done lists** names matching the default names you have entered.  Identify the value for BOARD_ID following these steps as taken from https://community.atlassian.com/t5/Trello-questions/How-to-get-Trello-Board-ID/qaq-p/1347525 ...
+1. Go to your Trello Board
+2. Add ".json" to end of the URL
+3. Format the JSON so it's readable (you can find a JSON viewer online)
+4. Search for idBoard - this will list your full Board ID.
 
 The project uses poetry for Python to create an isolated environment and manage package dependencies. To prepare your system, ensure you have an official distribution of Python version 3.7+ and install Poetry using one of the following commands (as instructed by the [poetry documentation](https://python-poetry.org/docs/#system-requirements)):
 
@@ -76,3 +87,21 @@ You should see output similar to the following:
  * Debugger PIN: 226-556-590
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+
+## Running the Tests
+### Pytest Tests
+Current pytest test cases cover a number of scenarios each with different numbers of items in each list and asserting ...
+ -  the expected number of items in the various lists
+  - whether the app should show all **Done** items in one list or break Done items into **Done (done today)** and **Done Before Today**.  
+
+Presently running the tests pass as expected when run from Test Explorer but not from commandline (unexpected assertion errors happen, to be investigated).
+
+Each test takes a fixture (list of Items) as a parameter and passes.  It can be made to fail...
+ - if the wrong fixture is used when calling e.g. no items fixture to a test such as test_one_in_each
+  - if the assertions made re: the number of Items in the list are altered
+ 
+
+ ### Integration Tests (Monkeypatch)
+ A test case is provided to test the index rot page using a monkeypatch stub.  The test asserts...
+  - positive web server response (200)
+  - expected mocked data in one of the mocked to do items 
