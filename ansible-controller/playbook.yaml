@@ -59,7 +59,7 @@
     ansible.builtin.git:
       repo: 'https://github.com/ianm1968/ToDoTake2'
       dest: /opt/todoapp
-      version: Mod-3-automation
+      version: main
 
   - name: Dependencies
     ansible.builtin.shell: '~/.local/bin/poetry install'
