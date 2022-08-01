@@ -15,7 +15,6 @@ This project uses ansible on a **control node** to deploy the **To Do App** and 
 - `An active Trello account` - with various security assets (tokens etc) identified as follows...
     - Trello API key
     - Trello token
-    - Trello Member ID
     - Trello Board ID
     - Three Trello lists within the board with appropriate names e.g. 'To Do', 'Doing', 'Done'  
 
