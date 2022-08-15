@@ -94,3 +94,23 @@ To execute tests from a command line open a command prompt, browse to the projec
 ```
 poetry run pytest
 ```
+
+## Docker Images and Containers
+The dockerfile provided is multi-stage and allows building of 'production' and 'development' images.
+
+```
+docker build --target production --tag todo-app .
+```
+...or...
+```
+docker build --target development --tag todo-app .
+```
+The 'production' image uses gunicorn and can be run using...
+```
+docker run --env-file .env --publish 5000:5000 todo-app .
+```
+The 'development' image uses Flask and can be run as follows (which maps the local /todo_app folder to the /app/todo_app folder on the image)...
+```
+docker run --env-file .env --publish 5000:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app todo-app
+```
+
