@@ -1,0 +1,6 @@
+.dockerignore
+.env
+.github/
+.vs/
+.vscode/
+ansible-controller/
