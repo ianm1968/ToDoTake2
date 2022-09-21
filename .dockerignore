@@ -1,6 +1,6 @@
 .dockerignore
 .env
-.github/*
-.vs/*
-.vscode/*
-ansible-controller/*
+.github/
+.vs/
+.vscode/
+ansible-controller/

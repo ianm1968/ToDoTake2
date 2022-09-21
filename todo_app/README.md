@@ -96,21 +96,23 @@ poetry run pytest
 ```
 
 ## Docker Images and Containers
-The dockerfile provided is multi-stage and allows building of 'production' and 'development' images.
+The dockerfile provided is multi-stage and allows building of a 'production', 'development' or 'test' image by running one of the following commands...
 
 ```
 docker build --target production --tag todo-app .
-```
-...or...
-```
 docker build --target development --tag todo-app .
+docker build --target test --tag todo-app .
 ```
 The 'production' image uses gunicorn and can be run using...
 ```
-docker run --env-file .env --publish 5000:5000 todo-app .
+docker run --env-file .env --publish 5000:5000 todo-app
 ```
-The 'development' image uses Flask and can be run as follows (which maps the local /todo_app folder to the /app/todo_app folder on the image)...
+The 'development' and 'test' images uses Flask and can be run as follows (which maps the local /todo_app folder to the /app/todo_app folder on the image).
+
 ```
 docker run --env-file .env --publish 5000:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app todo-app
 ```
-
+The tests can be executed on the test container from a bash window using...
+```
+poetry run pytest
+```
